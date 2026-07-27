@@ -12,6 +12,10 @@
     {
       "src": "public/**",
       "use": "@vercel/static"
+    },
+    {
+      "src": "*.js",
+      "use": "@vercel/static"
     }
   ],
   "headers": [
@@ -67,5 +71,9 @@
         }
       ]
     }
-  ]
+  ],
+  "env": {
+    "SUPABASE_URL": "@SUPABASE_URL",
+    "SUPABASE_ANON": "@SUPABASE_ANON"
+  }
 }
