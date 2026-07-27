@@ -1,13 +1,1651 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>together-for-tomorrow</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Together for Tomorrow · Peace Education Initiative · Navrachana Higher Secondary School, Sama</title>
+<meta name="description" content="Together for Tomorrow — Inspiring Minds. Building Peace. The Peace Education initiative of Navrachana Higher Secondary School, Sama.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:ital,wght@0,400;0,600;0,700;0,800;1,400;1,600&display=swap" rel="stylesheet">
+<style>
+/* ============ TOKENS & RESET ============ */
+:root{
+  --blue:#21409A; --blue-700:#1B3680; --blue-900:#142A66; --navy:#12234F;
+  --ink:#20305C; --ink-soft:#54618C;
+  --green:#2E8B57; --green-700:#237347; --green-100:#E3F2E9;
+  --gold:#F4C542; --gold-700:#C99A1F; --gold-100:#FDF1D2;
+  --lav:#A794E0; --lav-700:#6F5BB5; --lav-100:#EFEAFB;
+  --sky:#6FB7E8; --sky-700:#2E7FB8; --sky-100:#E7F3FC;
+  --warm:#FFFBF2; --paper:#FFFFFF;
+  --line:rgba(33,64,154,.13);
+  --sh-sm:0 4px 14px rgba(20,42,102,.07);
+  --sh-md:0 10px 30px rgba(20,42,102,.10);
+  --sh-lg:0 22px 48px rgba(20,42,102,.14);
+  --r-sm:12px; --r:20px; --r-lg:26px;
+  --fd:'Fredoka',system-ui,sans-serif; --fb:'Nunito',system-ui,sans-serif;
+  --navh:74px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:var(--fb);color:var(--ink);background:var(--warm);line-height:1.7;font-size:16.5px;overflow-x:hidden}
+img,svg{display:block;max-width:100%}
+a{color:var(--blue);text-decoration:none}
+ul{list-style:none}
+button{font-family:inherit;cursor:pointer}
+::selection{background:var(--gold);color:var(--navy)}
+:focus-visible{outline:3px solid var(--gold);outline-offset:3px;border-radius:6px}
+h1,h2,h3,h4{font-family:var(--fd);color:var(--navy);line-height:1.15;font-weight:600}
+.container{width:min(1180px,92%);margin-inline:auto}
+section{scroll-margin-top:calc(var(--navh) + 14px)}
+.skip{position:absolute;left:-999px;top:8px;background:var(--navy);color:#fff;padding:.6rem 1.2rem;border-radius:999px;z-index:300}
+.skip:focus{left:8px}
+
+/* ============ REVEAL & MOTION ============ */
+[data-reveal]{opacity:0;transform:translateY(28px);transition:opacity .75s ease var(--d,0s),transform .75s cubic-bezier(.22,.9,.3,1) var(--d,0s)}
+[data-reveal="left"]{transform:translateX(-34px)}
+[data-reveal="right"]{transform:translateX(34px)}
+[data-reveal="pop"]{transform:scale(.9)}
+[data-reveal].in{opacity:1;transform:none}
+@keyframes bob{50%{transform:translateY(-10px)}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes floaty{50%{transform:translateY(-14px) rotate(6deg)}}
+@keyframes pulse{50%{transform:scale(1.6);opacity:.4}}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  [data-reveal]{opacity:1;transform:none}
+}
+
+/* ============ TOP STRIP + NAV ============ */
+.topstrip{background:var(--navy);color:#DCE6FA;font-size:.82rem;font-weight:700;letter-spacing:.04em;text-align:center;padding:.5rem 1rem}
+.topstrip b{color:var(--gold)}
+.nav{position:sticky;top:0;z-index:120;background:rgba(255,251,242,.86);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid transparent;transition:background .3s,box-shadow .3s,border-color .3s}
+.nav.scrolled{background:rgba(255,255,255,.95);box-shadow:0 8px 26px rgba(20,42,102,.10);border-color:var(--line)}
+.nav-inner{width:min(1320px,95%);margin-inline:auto;height:var(--navh);display:flex;align-items:center;gap:1rem}
+.brand{display:flex;align-items:center;gap:.7rem;flex-shrink:0}
+.brand-mark{width:44px;height:44px}
+.brand-name{font-family:var(--fd);font-weight:600;font-size:1.12rem;color:var(--navy);line-height:1.1}
+.brand-name em{font-style:normal;color:var(--gold-700)}
+.brand-sub{display:block;font-family:var(--fb);font-weight:800;font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft)}
+.nav-links{display:flex;align-items:center;gap:.15rem;margin-left:auto}
+.nav-links a{position:relative;font-size:.88rem;font-weight:800;color:var(--ink);padding:.5rem .62rem;border-radius:10px;transition:color .25s}
+.nav-links a::after{content:"";position:absolute;left:.62rem;right:.62rem;bottom:.18rem;height:3px;border-radius:3px;background:var(--gold);transform:scaleX(0);transform-origin:left;transition:transform .3s}
+.nav-links a:hover,.nav-links a.active{color:var(--blue)}
+.nav-links a:hover::after,.nav-links a.active::after{transform:scaleX(1)}
+.nav-cta{margin-left:.6rem;background:var(--blue);color:#fff!important;font-size:.86rem;padding:.6rem 1.2rem;border-radius:999px;box-shadow:0 8px 20px rgba(33,64,154,.30);transition:transform .25s,background .25s}
+.nav-cta:hover{background:var(--blue-700);transform:translateY(-2px)}
+.nav-cta::after{display:none}
+.burger{display:none;margin-left:auto;width:46px;height:46px;border:1.5px solid var(--line);background:#fff;border-radius:14px;flex-direction:column;align-items:center;justify-content:center;gap:5px}
+.burger span{width:20px;height:2.5px;background:var(--navy);border-radius:2px;transition:.3s}
+.burger[aria-expanded="true"] span:nth-child(1){transform:translateY(7.5px) rotate(45deg)}
+.burger[aria-expanded="true"] span:nth-child(2){opacity:0}
+.burger[aria-expanded="true"] span:nth-child(3){transform:translateY(-7.5px) rotate(-45deg)}
+.progress{position:fixed;top:0;left:0;height:3.5px;background:linear-gradient(90deg,var(--gold),var(--gold-700));width:0%;z-index:200}
+
+/* ============ BUTTONS / PILLS / HEADINGS ============ */
+.btn{display:inline-flex;align-items:center;gap:.6rem;font:800 1rem var(--fb);padding:.92rem 1.7rem;border-radius:999px;border:2px solid transparent;transition:transform .25s,box-shadow .25s,background .25s,border-color .25s}
+.btn svg{width:19px;height:19px;transition:transform .25s}
+.btn:hover svg{transform:translateX(4px)}
+.btn-primary{background:var(--blue);color:#fff;box-shadow:0 12px 26px rgba(33,64,154,.30)}
+.btn-primary:hover{background:var(--blue-700);transform:translateY(-3px)}
+.btn-ghost{background:#fff;color:var(--blue);border-color:rgba(33,64,154,.28)}
+.btn-ghost:hover{border-color:var(--blue);background:var(--sky-100);transform:translateY(-3px)}
+.btn-gold{background:var(--gold);color:var(--navy);box-shadow:0 12px 26px rgba(244,197,66,.35)}
+.btn-gold:hover{background:#FFD35E;transform:translateY(-3px)}
+.eyebrow{display:inline-flex;align-items:center;gap:.55rem;font:800 .76rem var(--fb);letter-spacing:.15em;text-transform:uppercase;color:var(--blue-700);background:var(--sky-100);border:1px solid rgba(33,64,154,.14);padding:.45rem 1rem;border-radius:999px}
+.eyebrow .dot{width:8px;height:8px;border-radius:50%;background:var(--gold);box-shadow:0 0 0 4px rgba(244,197,66,.25)}
+.eyebrow.green{color:var(--green-700);background:var(--green-100);border-color:rgba(46,139,87,.2)}
+.eyebrow.green .dot{background:var(--green)}
+.eyebrow.gold{color:#8A6410;background:var(--gold-100);border-color:rgba(201,154,31,.25)}
+.eyebrow.gold .dot{background:var(--gold-700)}
+.eyebrow.lav{color:var(--lav-700);background:var(--lav-100);border-color:rgba(167,148,224,.3)}
+.eyebrow.lav .dot{background:var(--lav)}
+.sec-head{max-width:720px;margin-bottom:3.2rem}
+.sec-head.center{margin-inline:auto;text-align:center}
+.sec-head h2{font-size:clamp(1.9rem,3.6vw,2.75rem);margin:1.1rem 0 .9rem}
+.sec-head p{color:var(--ink-soft);font-size:1.06rem}
+.hl{position:relative;display:inline-block;white-space:nowrap}
+.hl svg{position:absolute;left:0;right:0;bottom:-.18em;width:100%;height:.34em;overflow:visible}
+.hl svg path{fill:none;stroke:var(--gold);stroke-width:7;stroke-linecap:round}
+.tag{display:inline-block;font:800 .66rem var(--fb);letter-spacing:.1em;text-transform:uppercase;padding:.28rem .7rem;border-radius:999px}
+.tag-warm{background:var(--gold-100);color:#8A6410}
+.tag-green{background:var(--green-100);color:var(--green-700)}
+.tag-sky{background:var(--sky-100);color:var(--sky-700)}
+.tag-lav{background:var(--lav-100);color:var(--lav-700)}
+.tag-line{background:transparent;border:1.5px dashed rgba(33,64,154,.35);color:var(--ink-soft)}
+.note{display:flex;gap:.7rem;align-items:flex-start;background:var(--gold-100);border:1px solid rgba(201,154,31,.25);border-radius:var(--r-sm);padding:.85rem 1.1rem;font-size:.9rem;color:#7A5A0D;max-width:720px}
+.note svg{width:20px;height:20px;flex-shrink:0;margin-top:.15rem}
+
+/* ============ HERO ============ */
+.hero{position:relative;padding:4.2rem 0 9.5rem;background:
+  radial-gradient(900px 520px at 88% -8%,rgba(167,148,224,.20),transparent 62%),
+  radial-gradient(760px 480px at -8% 32%,rgba(111,183,232,.22),transparent 60%),
+  radial-gradient(820px 520px at 68% 112%,rgba(46,139,87,.12),transparent 60%),
+  var(--warm)}
+.hero::before{content:"";position:absolute;inset:0;background-image:radial-gradient(rgba(33,64,154,.11) 1.3px,transparent 1.3px);background-size:24px 24px;mask-image:linear-gradient(to bottom,#000 5%,transparent 72%);-webkit-mask-image:linear-gradient(to bottom,#000 5%,transparent 72%);pointer-events:none}
+.hero .container{position:relative}
+.hero-grid{display:grid;grid-template-columns:1.02fr .98fr;gap:3.2rem;align-items:center}
+.hero-badge{display:inline-flex;align-items:center;gap:.6rem;background:#fff;border:1px solid var(--line);border-radius:999px;padding:.5rem 1.1rem .5rem .6rem;font-weight:800;font-size:.84rem;color:var(--ink);box-shadow:var(--sh-sm)}
+.hero-badge svg{width:30px;height:30px}
+.hero h1{font-size:clamp(2.7rem,6.2vw,4.4rem);font-weight:600;margin:1.4rem 0 .8rem;letter-spacing:-.01em}
+.hero-tag{font-family:var(--fd);font-weight:500;font-size:clamp(1.15rem,2.2vw,1.45rem);color:var(--ink);margin-bottom:1.2rem}
+.hero-tag .tm1{color:var(--blue)} .hero-tag .tm2{color:var(--green)}
+.hero-tag .tdot{color:var(--gold-700)}
+.hero-copy{color:var(--ink-soft);max-width:56ch;margin-bottom:2rem}
+.hero-actions{display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:1.6rem}
+.hero-meta{display:flex;flex-wrap:wrap;gap:.4rem 1.4rem;font-weight:800;font-size:.82rem;color:var(--ink-soft)}
+.hero-meta span{display:inline-flex;align-items:center;gap:.45rem}
+.hero-meta i{width:7px;height:7px;border-radius:50%;display:inline-block}
+.hero-art-wrap{position:relative}
+.hero-art{width:100%;height:auto;filter:drop-shadow(0 24px 40px rgba(20,42,102,.10))}
+.hero-art .bob{animation:bob 5.5s ease-in-out infinite;animation-delay:var(--bd,0s)}
+.hero-art .rays{animation:spin 38s linear infinite}
+.hero-art .dove{animation:bob 7s ease-in-out infinite}
+.deco{position:absolute;pointer-events:none;animation:floaty 8s ease-in-out infinite}
+.deco svg{width:100%;height:100%}
+/* stats */
+.stats{position:relative;z-index:5;margin-top:3.6rem;background:#fff;border:1px solid var(--line);border-radius:var(--r-lg);box-shadow:var(--sh-lg);display:grid;grid-template-columns:repeat(5,1fr);padding:2rem 1rem;transform:translateY(0)}
+.stat{text-align:center;padding:.4rem 1rem;border-right:1px dashed var(--line)}
+.stat:last-child{border-right:0}
+.stat b{display:block;font:600 2.35rem/1.1 var(--fd);color:var(--blue)}
+.stat:nth-child(2) b{color:var(--green)}
+.stat:nth-child(3) b{color:var(--gold-700)}
+.stat:nth-child(4) b{color:var(--lav-700)}
+.stat:nth-child(5) b{color:var(--sky-700)}
+.stat span{font-size:.82rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft)}
+
+/* ============ ABOUT ============ */
+.about{background:#fff;padding:8.5rem 0 6rem}
+.about-grid{display:grid;grid-template-columns:.92fr 1.08fr;gap:4rem;align-items:center}
+.about-art{background:linear-gradient(160deg,var(--lav-100),var(--sky-100));border-radius:34px 34px 34px 10px;padding:2rem;border:1px solid var(--line);box-shadow:var(--sh-md)}
+.about-art svg{width:100%;height:auto}
+.about-art .dove{animation:bob 7s ease-in-out infinite}
+.about h2{font-size:clamp(1.9rem,3.4vw,2.7rem);margin:1.1rem 0 1rem}
+.about p{color:var(--ink-soft);margin-bottom:1.1rem}
+.about p strong{color:var(--ink)}
+.vm-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.6rem;margin-top:5rem}
+.vm-card{position:relative;background:var(--warm);border:1px solid var(--line);border-radius:var(--r-lg);padding:2.2rem 2rem;overflow:hidden;transition:transform .3s,box-shadow .3s}
+.vm-card::before{content:"";position:absolute;top:0;left:0;right:0;height:6px;background:var(--green)}
+.vm-card.mission::before{background:var(--blue)}
+.vm-card:hover{transform:translateY(-6px);box-shadow:var(--sh-md)}
+.vm-icon{width:56px;height:56px;border-radius:16px 16px 16px 5px;display:grid;place-items:center;margin-bottom:1.2rem}
+.vm-icon svg{width:28px;height:28px}
+.vm-card h3{font-size:1.45rem;margin-bottom:.6rem}
+.vm-card p{color:var(--ink-soft);font-size:.98rem}
+.vm-card .wm{position:absolute;right:-14px;bottom:-20px;width:120px;height:120px;opacity:.07;color:var(--navy)}
+
+/* ============ PILLARS ============ */
+.pillars{padding:6.5rem 0;background:
+  radial-gradient(700px 400px at 100% 0%,rgba(111,183,232,.14),transparent 60%),
+  radial-gradient(700px 400px at 0% 100%,rgba(167,148,224,.14),transparent 60%),var(--warm)}
+.pillar-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.4rem}
+.pillar{position:relative;background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:2rem 1.6rem;overflow:hidden;transition:transform .3s,box-shadow .3s}
+.pillar::after{content:"";position:absolute;top:0;left:0;height:5px;width:38px;border-radius:0 0 6px 0;background:var(--pc,var(--blue));transition:width .35s}
+.pillar:hover{transform:translateY(-8px);box-shadow:var(--sh-md)}
+.pillar:hover::after{width:100%}
+.pillar .num{position:absolute;top:1.2rem;right:1.3rem;font:600 1.05rem var(--fd);color:rgba(33,64,154,.18)}
+.p-icon{width:58px;height:58px;border-radius:18px 18px 18px 6px;display:grid;place-items:center;margin-bottom:1.3rem;transition:transform .35s}
+.pillar:hover .p-icon{transform:rotate(-6deg) scale(1.08)}
+.p-icon svg{width:29px;height:29px}
+.pillar h3{font-size:1.22rem;margin-bottom:.55rem}
+.pillar p{font-size:.93rem;color:var(--ink-soft)}
+.pc-blue{--pc:var(--blue)} .pc-blue .p-icon{background:var(--sky-100);color:var(--blue)}
+.pc-green{--pc:var(--green)} .pc-green .p-icon{background:var(--green-100);color:var(--green)}
+.pc-gold{--pc:var(--gold)} .pc-gold .p-icon{background:var(--gold-100);color:var(--gold-700)}
+.pc-lav{--pc:var(--lav)} .pc-lav .p-icon{background:var(--lav-100);color:var(--lav-700)}
+
+/* ============ WORKSHOPS ============ */
+.workshops{background:#fff;padding:7rem 0}
+.ws-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.6rem}
+.ws-card{position:relative;background:#fff;border:1px solid var(--line);border-radius:var(--r-lg);padding:2.1rem 1.9rem 1.7rem;display:flex;flex-direction:column;transition:transform .3s,box-shadow .3s;overflow:hidden}
+.ws-card::before{content:"";position:absolute;inset:0 0 auto 0;height:6px;background:var(--ac)}
+.ws-card:hover{transform:translateY(-8px);box-shadow:0 20px 44px var(--acs)}
+.ws-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:1.3rem}
+.ws-num{font:600 2.6rem/1 var(--fd);color:var(--ac);opacity:.9}
+.status{display:inline-flex;align-items:center;gap:.45rem;font:800 .72rem var(--fb);letter-spacing:.08em;text-transform:uppercase;color:var(--green-700);background:var(--green-100);padding:.35rem .85rem;border-radius:999px}
+.status i{width:8px;height:8px;border-radius:50%;background:var(--green);animation:pulse 2s infinite}
+.ws-icon{width:54px;height:54px;border-radius:16px 16px 16px 5px;display:grid;place-items:center;background:var(--at);color:var(--ac);margin-bottom:1.1rem}
+.ws-icon svg{width:27px;height:27px}
+.ws-card h3{font-size:1.35rem;margin-bottom:.55rem}
+.ws-card>p{font-size:.95rem;color:var(--ink-soft);flex:1}
+.ws-date{display:flex;align-items:center;gap:.6rem;border-top:1px dashed var(--line);margin-top:1.4rem;padding-top:1.2rem;font-weight:800;color:var(--ink);font-size:.94rem}
+.ws-date svg{width:20px;height:20px;color:var(--ac)}
+.ac-blue{--ac:var(--blue);--at:var(--sky-100);--acs:rgba(33,64,154,.16)}
+.ac-green{--ac:var(--green);--at:var(--green-100);--acs:rgba(46,139,87,.16)}
+.ac-gold{--ac:var(--gold-700);--at:var(--gold-100);--acs:rgba(201,154,31,.18)}
+
+/* ============ PROJECTS ============ */
+.projects{padding:7rem 0;background:
+  radial-gradient(700px 420px at 0% 0%,rgba(46,139,87,.08),transparent 60%),var(--warm)}
+.proj-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.8rem}
+.proj{background:#fff;border:1px solid var(--line);border-radius:var(--r-lg);overflow:hidden;display:flex;flex-direction:column;transition:transform .3s,box-shadow .3s}
+.proj:hover{transform:translateY(-8px);box-shadow:var(--sh-lg)}
+.proj-art{position:relative}
+.proj-art svg{width:100%;height:auto}
+.proj-num{position:absolute;top:1rem;left:1.1rem;background:rgba(255,255,255,.92);border:1px solid var(--line);font:600 .95rem var(--fd);color:var(--navy);width:38px;height:38px;border-radius:12px 12px 12px 4px;display:grid;place-items:center}
+.proj-body{padding:1.8rem 1.9rem 1.6rem;display:flex;flex-direction:column;flex:1}
+.proj-body h3{font-size:1.4rem;margin-bottom:.5rem}
+.proj-body>p{font-size:.96rem;color:var(--ink-soft);margin-bottom:1.1rem}
+.outcomes{margin-bottom:1.3rem}
+.outcomes h4{font:800 .72rem var(--fb);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:.55rem}
+.outcomes li{display:flex;gap:.55rem;align-items:flex-start;font-size:.92rem;font-weight:600;color:var(--ink);padding:.22rem 0}
+.outcomes svg{width:17px;height:17px;color:var(--green);flex-shrink:0;margin-top:.2rem}
+.proj-foot{margin-top:auto;display:flex;align-items:center;gap:.6rem;border-top:1px dashed var(--line);padding-top:1.1rem;font-size:.86rem;font-weight:800;color:var(--ink-soft)}
+.proj-foot svg{width:18px;height:18px;color:var(--gold-700)}
+
+/* ============ COMPETITIONS ============ */
+.comps{background:#fff;padding:7rem 0}
+.comp-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.8rem}
+.comp{position:relative;background:#fff;border:1px solid var(--line);border-radius:var(--r-lg);padding:2.3rem 2.2rem;overflow:hidden;transition:transform .3s,box-shadow .3s}
+.comp::before{content:"";position:absolute;inset:0 0 auto 0;height:8px;background:linear-gradient(90deg,var(--c1),var(--c2))}
+.comp:hover{transform:translateY(-8px);box-shadow:var(--sh-lg)}
+.comp-head{display:flex;gap:1.1rem;align-items:flex-start;margin-bottom:1rem}
+.comp-icon{width:60px;height:60px;flex-shrink:0;border-radius:18px 18px 18px 6px;display:grid;place-items:center;background:var(--ct);color:var(--c1)}
+.comp-icon svg{width:30px;height:30px}
+.comp h3{font-size:1.5rem}
+.comp .comp-sub{font-size:.95rem;color:var(--ink-soft);margin-top:.35rem}
+.comp-dates{display:grid;gap:.7rem;background:var(--warm);border:1px solid var(--line);border-radius:var(--r);padding:1.2rem 1.3rem;margin:1.3rem 0}
+.cd-row{display:flex;align-items:center;gap:.8rem;font-size:.93rem}
+.cd-row svg{width:19px;height:19px;color:var(--c1);flex-shrink:0}
+.cd-row b{margin-left:auto;font-weight:800;color:var(--navy);text-align:right}
+.cd-row span{color:var(--ink-soft);font-weight:700}
+.comp-flag{display:flex;gap:.7rem;align-items:flex-start;background:var(--gold-100);border:1px dashed rgba(201,154,31,.45);border-radius:var(--r-sm);padding:.85rem 1.05rem;font-size:.88rem;font-weight:700;color:#7A5A0D;margin-bottom:1.2rem}
+.comp-flag svg{width:19px;height:19px;flex-shrink:0;color:var(--gold-700)}
+.comp-rec{display:flex;align-items:center;gap:.6rem;font-weight:800;color:var(--ink)}
+.comp-rec svg{width:22px;height:22px;color:var(--gold-700)}
+.c-blue{--c1:var(--blue);--c2:var(--sky);--ct:var(--sky-100)}
+.c-green{--c1:var(--green);--c2:#7CC69B;--ct:var(--green-100)}
+
+/* ============ ROADMAP ============ */
+.roadmap{padding:7rem 0;background:
+  radial-gradient(700px 420px at 100% 20%,rgba(244,197,66,.12),transparent 60%),var(--warm)}
+.tl{position:relative;max-width:820px;margin-inline:auto;padding-left:86px}
+.tl::before{content:"";position:absolute;left:31px;top:10px;bottom:10px;width:4px;border-radius:4px;background:linear-gradient(var(--blue),var(--green) 45%,var(--gold) 80%,var(--navy));transform:scaleY(0);transform-origin:top;transition:transform 1.5s cubic-bezier(.4,0,.2,1) .2s}
+.tl.in::before{transform:scaleY(1)}
+.tl-item{position:relative;margin-bottom:2rem}
+.tl-dot{position:absolute;left:-86px;top:0;width:62px;height:62px;border-radius:50%;display:grid;place-items:center;font:600 1.05rem var(--fd);color:#fff;background:var(--dc,var(--blue));box-shadow:0 0 0 6px var(--warm),0 8px 18px rgba(20,42,102,.18)}
+.tl-dot svg{width:26px;height:26px}
+.tl-card{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:1.6rem 1.8rem;transition:transform .3s,box-shadow .3s}
+.tl-item:hover .tl-card{transform:translateX(6px);box-shadow:var(--sh-md)}
+.tl-card .tl-tag{margin-bottom:.5rem}
+.tl-card h3{font-size:1.3rem;margin-bottom:.5rem}
+.tl-goal{font-size:.94rem;color:var(--ink-soft)}
+.tl-goal b{color:var(--ink);font-weight:800}
+.tl-card.finale{background:linear-gradient(135deg,var(--blue-900),var(--blue));border-color:transparent;color:#DCE6FA}
+.tl-card.finale h3{color:#fff}
+.tl-card.finale .tl-goal{color:#C4D3F2}
+.tl-chips{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:1rem}
+.tl-chips span{display:inline-flex;align-items:center;gap:.45rem;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.28);color:#fff;font-weight:800;font-size:.84rem;padding:.5rem 1rem;border-radius:999px}
+.tl-chips svg{width:15px;height:15px;color:var(--gold)}
+
+/* ============ SCHEDULE ============ */
+.schedule{background:#fff;padding:7rem 0}
+.sched-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem;margin-bottom:2rem}
+.sched{display:flex;gap:1.1rem;align-items:center;background:var(--warm);border:1px solid var(--line);border-radius:var(--r);padding:1.2rem 1.3rem;transition:transform .3s,box-shadow .3s,border-color .3s}
+.sched:hover{transform:translateY(-5px);box-shadow:var(--sh-md);border-color:rgba(33,64,154,.28)}
+.datebox{flex-shrink:0;width:78px;text-align:center;background:var(--db,var(--sky-100));color:var(--dt,var(--blue));border-radius:16px 16px 16px 5px;padding:.7rem .3rem}
+.datebox b{display:block;font:600 1.7rem/1 var(--fd)}
+.datebox span{font:800 .68rem var(--fb);letter-spacing:.1em;text-transform:uppercase}
+.sched h3{font-size:1.05rem;line-height:1.35;margin-bottom:.35rem}
+.sched .row2{display:flex;gap:.5rem;flex-wrap:wrap}
+.db-blue{--db:var(--sky-100);--dt:var(--blue)}
+.db-green{--db:var(--green-100);--dt:var(--green-700)}
+.db-gold{--db:var(--gold-100);--dt:var(--gold-700)}
+.db-lav{--db:var(--lav-100);--dt:var(--lav-700)}
+
+/* ============ PUBLICATIONS ============ */
+.pubs{padding:7rem 0;background:var(--warm)}
+.pub-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.6rem;margin-bottom:2rem}
+.mag{position:relative;background:#fff;border:1px solid var(--line);border-radius:var(--r-lg);overflow:hidden;transition:transform .3s,box-shadow .3s}
+.mag:hover{transform:translateY(-8px) rotate(-.5deg);box-shadow:var(--sh-lg)}
+.mag::after{content:"";position:absolute;top:0;right:0;border-style:solid;border-width:0 34px 34px 0;border-color:var(--warm) var(--warm) rgba(33,64,154,.10) transparent}
+.mag-head{display:flex;align-items:center;gap:.8rem;padding:1.4rem 1.6rem;background:var(--mt);color:var(--mc)}
+.mag-head svg{width:26px;height:26px}
+.mag-head h3{font-size:1.2rem;color:inherit}
+.mag-body{padding:1.5rem 1.6rem 1.6rem}
+.art{padding:.85rem 0;border-bottom:1px dashed var(--line)}
+.art:last-of-type{border-bottom:0}
+.art b{display:block;font-size:.98rem;color:var(--ink);line-height:1.45}
+.art span{font-size:.8rem;color:var(--ink-soft);font-weight:700}
+.mt-blue{--mt:var(--sky-100);--mc:var(--blue)}
+.mt-green{--mt:var(--green-100);--mc:var(--green-700)}
+.mt-gold{--mt:var(--gold-100);--mc:#8A6410}
+
+/* ============ RECOGNITION ============ */
+.awards{padding:7rem 0;background:linear-gradient(160deg,var(--lav-100),#F6F2FD 55%,var(--sky-100))}
+.award-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:1.3rem}
+.award{position:relative;background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:1.9rem 1.4rem 1.6rem;text-align:center;overflow:hidden;transition:transform .3s,box-shadow .3s}
+.award::before{content:"";position:absolute;top:-30px;right:-30px;width:60px;height:60px;background:var(--at);border-radius:50%;opacity:.7;transition:transform .35s}
+.award:hover{transform:translateY(-7px);box-shadow:var(--sh-md)}
+.award:hover::before{transform:scale(1.5)}
+.award:hover .seal{transform:rotate(-8deg) scale(1.1)}
+.seal{width:62px;height:62px;margin:0 auto 1.1rem;border-radius:50%;display:grid;place-items:center;background:var(--at);color:var(--ac);border:2px dashed var(--ac);transition:transform .35s;position:relative}
+.seal svg{width:28px;height:28px}
+.award h3{font-size:1.05rem;margin-bottom:.45rem}
+.award p{font-size:.83rem;color:var(--ink-soft)}
+.aw-blue{--ac:var(--blue);--at:var(--sky-100)}
+.aw-gold{--ac:var(--gold-700);--at:var(--gold-100)}
+.aw-green{--ac:var(--green);--at:var(--green-100)}
+.aw-lav{--ac:var(--lav-700);--at:var(--lav-100)}
+.aw-sky{--ac:var(--sky-700);--at:#DDF0FC}
+
+/* ============ SHOWCASE ============ */
+.wave{line-height:0}
+.wave svg{width:100%;height:80px}
+.showcase{position:relative;background:linear-gradient(135deg,var(--blue-900),var(--blue) 70%,var(--blue-700));color:#DCE6FA;padding:6.5rem 0 7rem;overflow:hidden}
+.showcase::before{content:"";position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.07) 1.4px,transparent 1.4px);background-size:26px 26px;pointer-events:none}
+.showcase .container{position:relative;display:grid;grid-template-columns:1.05fr .95fr;gap:3.5rem;align-items:center}
+.showcase .eyebrow{background:rgba(244,197,66,.16);border-color:rgba(244,197,66,.4);color:var(--gold)}
+.showcase h2{color:#fff;font-size:clamp(2rem,4vw,3rem);margin:1.2rem 0 1rem}
+.showcase p{color:#C4D3F2;max-width:52ch;margin-bottom:1.8rem}
+.hl-chips{display:grid;grid-template-columns:1fr 1fr;gap:.8rem;margin-bottom:2.2rem}
+.hl-chips span{display:flex;align-items:center;gap:.6rem;background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.22);border-radius:14px;padding:.8rem 1rem;font-weight:800;font-size:.9rem;color:#fff;transition:background .3s,transform .3s}
+.hl-chips span:hover{background:rgba(255,255,255,.16);transform:translateX(4px)}
+.hl-chips svg{width:18px;height:18px;color:var(--gold);flex-shrink:0}
+.showcase-art svg{width:100%;height:auto}
+.showcase-art .dove{animation:bob 7s ease-in-out infinite}
+
+/* ============ MEDIA ============ */
+.media{padding:7rem 0;background:var(--warm)}
+.media-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.6rem}
+.media-card{background:#fff;border:1px solid var(--line);border-radius:var(--r-lg);padding:2rem 1.8rem;transition:transform .3s,box-shadow .3s}
+.media-card:hover{transform:translateY(-7px);box-shadow:var(--sh-md)}
+.media-card .m-icon{width:54px;height:54px;border-radius:16px 16px 16px 5px;display:grid;place-items:center;margin-bottom:1.2rem}
+.media-card .m-icon svg{width:26px;height:26px}
+.media-card h3{font-size:1.2rem;margin-bottom:.5rem}
+.media-card p{font-size:.92rem;color:var(--ink-soft);margin-bottom:1rem}
+
+/* ============ GALLERY ============ */
+.gallery{padding:7rem 0;background:#fff}
+.masonry{columns:3 260px;column-gap:1.3rem}
+.g-item{break-inside:avoid;margin-bottom:1.3rem;background:#fff;border:1px solid var(--line);border-radius:var(--r);overflow:hidden;transition:transform .3s,box-shadow .3s}
+.g-item:hover{transform:translateY(-6px);box-shadow:var(--sh-md)}
+.g-item:hover .g-art svg{transform:scale(1.05)}
+.g-art{overflow:hidden}
+.g-art svg{width:100%;height:auto;transition:transform .5s ease}
+.g-cap{display:flex;align-items:center;justify-content:space-between;gap:.6rem;padding:.9rem 1.1rem}
+.g-cap b{font-size:.9rem;color:var(--ink)}
+.g-cap small{display:block;font-size:.74rem;color:var(--ink-soft);font-weight:700}
+
+/* ============ TESTIMONIALS ============ */
+.testi{padding:7rem 0;background:linear-gradient(180deg,var(--sky-100),#F4FAFE)}
+.carousel{max-width:820px;margin-inline:auto;position:relative}
+.car-viewport{overflow:hidden;border-radius:var(--r-lg)}
+.car-track{display:flex;transition:transform .6s cubic-bezier(.4,0,.2,1)}
+.t-slide{min-width:100%;padding:.4rem}
+.t-card{background:#fff;border:1px solid var(--line);border-radius:var(--r-lg);padding:2.6rem 2.6rem 2.2rem;box-shadow:var(--sh-md);position:relative}
+.t-card .q{width:46px;height:46px;color:var(--gold);margin-bottom:1.2rem}
+.t-card blockquote{font-size:1.13rem;line-height:1.75;color:var(--ink);font-weight:600;margin-bottom:1.6rem}
+.t-who{display:flex;align-items:center;gap:1rem}
+.avatar{width:58px;height:58px;border-radius:50%;display:grid;place-items:center;font:600 1.3rem var(--fd);color:#fff;box-shadow:0 0 0 3px #fff,0 6px 14px rgba(20,42,102,.18)}
+.av-gold{background:linear-gradient(135deg,var(--gold),var(--gold-700));color:var(--navy)}
+.av-blue{background:linear-gradient(135deg,var(--sky),var(--blue))}
+.av-green{background:linear-gradient(135deg,#7CC69B,var(--green))}
+.t-who b{display:block;font-size:1rem;color:var(--navy)}
+.t-who span{font-size:.83rem;color:var(--ink-soft);font-weight:700}
+.car-nav{display:flex;align-items:center;justify-content:center;gap:1.2rem;margin-top:1.8rem}
+.car-btn{width:46px;height:46px;border-radius:50%;border:1.5px solid var(--line);background:#fff;color:var(--blue);display:grid;place-items:center;transition:.25s}
+.car-btn:hover{background:var(--blue);color:#fff;border-color:var(--blue);transform:translateY(-2px)}
+.car-btn svg{width:20px;height:20px}
+.car-dots{display:flex;gap:.5rem}
+.car-dots button{width:10px;height:10px;border-radius:999px;border:0;background:rgba(33,64,154,.25);transition:.3s;padding:0}
+.car-dots button[aria-current="true"]{width:28px;background:var(--blue)}
+.car-note{text-align:center;font-size:.8rem;color:var(--ink-soft);margin-top:1.2rem;font-weight:700}
+
+/* ============ FAQ ============ */
+.faq{padding:7rem 0;background:#fff}
+.faq-list{max-width:800px;margin-inline:auto;display:grid;gap:1rem}
+.faq-item{background:var(--warm);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;transition:box-shadow .3s,border-color .3s}
+.faq-item.open{border-color:rgba(33,64,154,.35);box-shadow:var(--sh-md);background:#fff}
+.faq-q{width:100%;display:flex;align-items:center;gap:1rem;text-align:left;background:none;border:0;padding:1.3rem 1.5rem;font:600 1.08rem var(--fd);color:var(--navy)}
+.faq-q .fx{margin-left:auto;flex-shrink:0;width:34px;height:34px;border-radius:50%;background:var(--sky-100);color:var(--blue);display:grid;place-items:center;transition:transform .35s,background .3s,color .3s}
+.faq-item.open .fx{transform:rotate(45deg);background:var(--blue);color:#fff}
+.faq-q .fx svg{width:16px;height:16px}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .4s ease}
+.faq-a p{padding:0 1.5rem 1.4rem;color:var(--ink-soft);font-size:.97rem}
+
+/* ============ CONTACT ============ */
+.contact{padding:7rem 0;background:
+  radial-gradient(700px 420px at 100% 0%,rgba(111,183,232,.16),transparent 60%),
+  radial-gradient(700px 420px at 0% 100%,rgba(46,139,87,.10),transparent 60%),var(--warm)}
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.8rem;margin-bottom:1.8rem}
+.c-card{background:#fff;border:1px solid var(--line);border-radius:var(--r-lg);padding:2.2rem 2.1rem;box-shadow:var(--sh-sm)}
+.c-card h3{font-size:1.45rem;margin-bottom:1.4rem;display:flex;align-items:center;gap:.7rem}
+.c-card h3 svg{width:26px;height:26px;color:var(--gold-700)}
+.c-row{display:flex;gap:1rem;align-items:flex-start;padding:.9rem 0;border-bottom:1px dashed var(--line)}
+.c-row:last-child{border-bottom:0}
+.c-ic{width:44px;height:44px;flex-shrink:0;border-radius:13px 13px 13px 4px;display:grid;place-items:center}
+.c-ic svg{width:21px;height:21px}
+.c-row small{display:block;font:800 .68rem var(--fb);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft)}
+.c-row b{font-size:.97rem;color:var(--ink);font-weight:800;display:flex;flex-wrap:wrap;gap:.5rem;align-items:center}
+.ph{font:800 .62rem var(--fb);letter-spacing:.08em;text-transform:uppercase;background:var(--gold-100);color:#8A6410;padding:.18rem .55rem;border-radius:999px}
+.field{margin-bottom:1.1rem}
+.field label{display:block;font:800 .78rem var(--fb);letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:.4rem}
+.field input,.field textarea{width:100%;border:1.5px solid var(--line);border-radius:14px;padding:.85rem 1.05rem;font:600 .95rem var(--fb);color:var(--ink);background:var(--warm);transition:border-color .25s,box-shadow .25s}
+.field input:focus,.field textarea:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 4px rgba(33,64,154,.12);background:#fff}
+.form-ok{display:none;margin-top:1rem;background:var(--green-100);border:1px solid rgba(46,139,87,.3);color:var(--green-700);font-weight:800;font-size:.9rem;border-radius:var(--r-sm);padding:.9rem 1.1rem}
+.form-ok.show{display:block}
+.map-box{background:linear-gradient(135deg,var(--sky-100),var(--lav-100));border:1.5px dashed rgba(33,64,154,.35);border-radius:var(--r-lg);min-height:250px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.8rem;text-align:center;padding:2rem;color:var(--ink-soft)}
+.map-box svg{width:52px;height:52px;color:var(--blue)}
+.map-box b{font:600 1.2rem var(--fd);color:var(--navy)}
+
+/* ============ FOOTER ============ */
+footer{background:var(--navy);color:#B9C8E8;padding:4.5rem 0 0}
+.f-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1.3fr;gap:2.5rem;padding-bottom:3rem}
+.f-brand .brand-name{color:#fff}
+.f-brand p{font-size:.92rem;margin:1rem 0 1.3rem;color:#93A7D4}
+.f-social{display:flex;gap:.7rem}
+.f-social a{width:42px;height:42px;border-radius:13px 13px 13px 4px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);display:grid;place-items:center;color:#DCE6FA;transition:.25s}
+.f-social a:hover{background:var(--gold);color:var(--navy);transform:translateY(-3px)}
+.f-social svg{width:19px;height:19px}
+footer h4{color:#fff;font-size:1.05rem;margin-bottom:1.1rem}
+.f-links li{margin-bottom:.55rem}
+.f-links a{color:#93A7D4;font-weight:700;font-size:.92rem;transition:color .25s,padding-left .25s}
+.f-links a:hover{color:var(--gold);padding-left:5px}
+.f-news p{font-size:.9rem;color:#93A7D4;margin-bottom:1rem}
+.f-news form{display:flex;gap:.6rem}
+.f-news input{flex:1;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);border-radius:999px;padding:.8rem 1.2rem;color:#fff;font:600 .9rem var(--fb)}
+.f-news input::placeholder{color:#7B90C0}
+.f-news input:focus{outline:none;border-color:var(--gold)}
+.f-news button{background:var(--gold);color:var(--navy);border:0;border-radius:999px;padding:.8rem 1.4rem;font:800 .9rem var(--fb);transition:.25s}
+.f-news button:hover{background:#FFD35E;transform:translateY(-2px)}
+.f-note{font-size:.75rem;color:#6E83B5;margin-top:.7rem}
+.f-bottom{border-top:1px solid rgba(255,255,255,.1);padding:1.4rem 0;display:flex;flex-wrap:wrap;gap:.8rem;align-items:center;justify-content:space-between;font-size:.84rem;color:#7B90C0}
+.f-bottom b{color:var(--gold)}
+.to-top{position:fixed;right:22px;bottom:22px;width:52px;height:52px;border-radius:16px 16px 16px 5px;background:var(--blue);color:#fff;border:0;display:grid;place-items:center;box-shadow:var(--sh-lg);opacity:0;pointer-events:none;transform:translateY(14px);transition:.35s;z-index:150}
+.to-top.show{opacity:1;pointer-events:auto;transform:none}
+.to-top:hover{background:var(--gold);color:var(--navy)}
+.to-top svg{width:22px;height:22px}
+
+/* ============ RESPONSIVE ============ */
+@media (max-width:1200px){
+  .nav-links{position:fixed;top:calc(var(--navh) + 8px);left:14px;right:14px;flex-direction:column;align-items:stretch;background:#fff;border:1px solid var(--line);border-radius:22px;padding:1.2rem;box-shadow:var(--sh-lg);gap:.2rem;opacity:0;visibility:hidden;transform:translateY(-12px);transition:.3s;z-index:110}
+  .nav-links.open{opacity:1;visibility:visible;transform:none}
+  .nav-links a{padding:.8rem 1rem;font-size:1rem}
+  .nav-links a::after{display:none}
+  .nav-cta{margin:.5rem 0 0;text-align:center;justify-content:center;display:flex}
+  .burger{display:flex}
+  .award-grid{grid-template-columns:repeat(3,1fr)}
+}
+@media (max-width:992px){
+  .hero-grid,.about-grid,.showcase .container{grid-template-columns:1fr;gap:2.6rem}
+  .hero{padding-bottom:7rem}
+  .hero-art-wrap{max-width:560px;margin-inline:auto}
+  .stats{grid-template-columns:repeat(3,1fr);gap:1rem 0}
+  .stat:nth-child(3){border-right:0}
+  .stat:nth-child(-n+3){border-bottom:1px dashed var(--line);padding-bottom:1.2rem}
+  .pillar-grid{grid-template-columns:1fr 1fr}
+  .ws-grid,.pub-grid,.media-grid,.sched-grid{grid-template-columns:1fr 1fr}
+  .comp-grid,.proj-grid,.vm-grid,.contact-grid{grid-template-columns:1fr}
+  .award-grid{grid-template-columns:repeat(2,1fr)}
+  .about-art{max-width:520px;margin-inline:auto}
+}
+@media (max-width:640px){
+  body{font-size:15.5px}
+  .pillar-grid,.ws-grid,.pub-grid,.media-grid,.sched-grid,.hl-chips{grid-template-columns:1fr}
+  .stats{grid-template-columns:1fr 1fr;padding:1.4rem .6rem}
+  .stat{border-right:0;border-bottom:1px dashed var(--line);padding:1rem .5rem}
+  .stat:nth-child(5){border-bottom:0}
+  .award-grid{grid-template-columns:1fr}
+  .tl{padding-left:70px}
+  .tl::before{left:24px}
+  .tl-dot{left:-70px;width:50px;height:50px;font-size:.9rem}
+  .t-card{padding:2rem 1.6rem 1.8rem}
+  .f-grid{grid-template-columns:1fr}
+  .hero-actions .btn{width:100%;justify-content:center}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#home">Skip to content</a>
+<div class="progress" id="progress" aria-hidden="true"></div>
+
+<!-- ============ SVG LIBRARY ============ -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+<defs>
+  <!-- logo mark -->
+  <symbol id="logo-mark" viewBox="0 0 48 48">
+    <rect x="2" y="2" width="44" height="44" rx="14" fill="#21409A"/>
+    <path d="M13.5 34 C18 26 24 19 34.5 13.5" stroke="#fff" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+    <path d="M20.5 26.5 C17.5 25.5 16 22.5 17 19.5 C20 20.5 21.5 23.5 20.5 26.5 Z" fill="#fff"/>
+    <path d="M26 21 C23.5 19 23 15.8 25 13.2 C27.5 15 28 18.4 26 21 Z" fill="#F4C542"/>
+    <path d="M30.5 16 C30.8 19 33 21 36 20.8 C35.5 17.8 33.4 15.9 30.5 16 Z" fill="#fff"/>
+    <circle cx="17.5" cy="30.5" r="2.3" fill="#F4C542"/>
+  </symbol>
+  <!-- dove figure -->
+  <g id="doveFig">
+    <path d="M6 27 L-3 22 L1 30 L-3 38 Z" fill="#FFFFFF"/>
+    <path d="M26 24 C22 12 30 2 42 2 C40 10 36 18 28 24 Z" fill="#FFFFFF"/>
+    <path d="M4 30 C14 16 34 10 52 16 C58 18 62 22 64 26 C56 34 42 38 28 36 C18 34 9 32 4 30 Z" fill="#FFFFFF"/>
+    <circle cx="56" cy="21" r="6.5" fill="#FFFFFF"/>
+    <path d="M62 19 L70 22 L62 25 Z" fill="#F4C542"/>
+    <circle cx="57.5" cy="19.5" r="1.5" fill="#14244F"/>
+    <path d="M68 23 C72 23 75 21 77 18" stroke="#2E8B57" stroke-width="2" fill="none" stroke-linecap="round"/>
+    <path d="M74 19.5 c2.5-3 5-3.4 7-2.6 c-1.6 2.6 -4.2 3.4 -7 2.6z" fill="#2E8B57"/>
+    <path d="M30 20 C34 14 38 10 42 8" stroke="#D9E4F6" stroke-width="2" fill="none" stroke-linecap="round"/>
+  </g>
+  <!-- stroke icons -->
+  <symbol id="i-olive" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20 C9 13 14 8 21 4"/><path d="M9 14 C6 13.5 4.5 11 5.5 8.5 C8 9 9.5 11.5 9 14 Z" fill="currentColor" stroke="none"/><path d="M13 10 C10.5 9 9.5 6.5 10.5 4 C13 4.5 14 7 13 10 Z" fill="currentColor" stroke="none"/><path d="M16.5 7 C16 9.5 17 12 19.5 12.5 C20 10 19 7.5 16.5 7 Z" fill="currentColor" stroke="none"/><circle cx="7" cy="16.5" r="1.4" fill="currentColor" stroke="none"/></g></symbol>
+  <symbol id="i-globe" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.8 2.6 4 5.6 4 9s-1.2 6.4-4 9c-2.8-2.6-4-5.6-4-9s1.2-6.4 4-9z"/></g></symbol>
+  <symbol id="i-leaf" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 19 C5 9 12 4 20 4 C20 12 15 19 5 19 Z"/><path d="M5 19 C8 14 12 10 16 8"/></g></symbol>
+  <symbol id="i-users" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="9" cy="7.5" r="3.5"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><path d="M16 4.6a3.5 3.5 0 0 1 0 5.8M17.5 14.6c2 .9 3.5 2.8 3.5 5.4"/></g></symbol>
+  <symbol id="i-heart" viewBox="0 0 24 24"><path d="M12 20.5C7.2 16.6 3.5 13.4 3.5 9.3 3.5 6.7 5.5 4.5 8 4.5c1.6 0 3.1.9 4 2.3.9-1.4 2.4-2.3 4-2.3 2.5 0 4.5 2.2 4.5 4.8 0 4.1-3.7 7.3-8.5 11.2z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></symbol>
+  <symbol id="i-bulb" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 1 3.6 10.8c-.7.6-1.1 1.3-1.3 2.2h-4.6c-.2-.9-.6-1.6-1.3-2.2A6 6 0 0 1 12 3z"/></g></symbol>
+  <symbol id="i-book" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5V5.5A2.5 2.5 0 0 1 6.5 3H20v14H6.5A2.5 2.5 0 0 0 4 19.5z"/><path d="M4 19.5A2.5 2.5 0 0 0 6.5 22H20v-5"/></g></symbol>
+  <symbol id="i-dice" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="4" width="16" height="16" rx="3.5"/><circle cx="8.7" cy="8.7" r="1.4" fill="currentColor" stroke="none"/><circle cx="15.3" cy="8.7" r="1.4" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="1.4" fill="currentColor" stroke="none"/><circle cx="8.7" cy="15.3" r="1.4" fill="currentColor" stroke="none"/><circle cx="15.3" cy="15.3" r="1.4" fill="currentColor" stroke="none"/></g></symbol>
+  <symbol id="i-chart" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M4 20h16"/><path d="M7 20v-6M12 20V8M17 20v-9"/></g></symbol>
+  <symbol id="i-trophy" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 4h8v5a4 4 0 0 1-8 0V4z"/><path d="M8 6H5a3 3 0 0 0 3 4M16 6h3a3 3 0 0 1-3 4"/><path d="M12 13v4M8 21h8M9.5 17h5"/></g></symbol>
+  <symbol id="i-medal" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="9" r="5"/><path d="M9 13.2 7 21l5-2.8L17 21l-2-7.8"/></g></symbol>
+  <symbol id="i-news" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h12v15.5a1.5 1.5 0 0 1-3 0"/><path d="M16 8h3v10a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4"/><path d="M8 9h5M8 13h5M8 17h3"/></g></symbol>
+  <symbol id="i-mega" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 5 6 9H3v6h3l8 4V5z"/><path d="M18 9a4 4 0 0 1 0 6"/><path d="M7 15.5 8 21h2.5l-1-5.5"/></g></symbol>
+  <symbol id="i-star" viewBox="0 0 24 24"><path d="M12 3l2.7 5.6 6.1.8-4.5 4.3 1.1 6-5.4-2.9-5.4 2.9 1.1-6L3.2 9.4l6.1-.8z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></symbol>
+  <symbol id="i-spark" viewBox="0 0 24 24"><path d="M12 2l2.2 7.8L22 12l-7.8 2.2L12 22l-2.2-7.8L2 12l7.8-2.2z" fill="currentColor"/></symbol>
+  <symbol id="i-cal" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="5" width="18" height="16" rx="2.5"/><path d="M3 10h18M8 3v4M16 3v4"/></g></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M4 12.5l5 5L20 6.5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M4 12h15M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-up" viewBox="0 0 24 24"><path d="M12 20V5M6 11l6-6 6 6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M3 7.5l9 6 9-6"/></g></symbol>
+  <symbol id="i-phone" viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a12 12 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></g></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></g></symbol>
+  <symbol id="i-pen" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5l4 4L7 21l-5 1 1-5z"/></g></symbol>
+  <symbol id="i-doc" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2h8l4 4v16H6z"/><path d="M14 2v4h4M9.5 12h5M9.5 16h5"/></g></symbol>
+  <symbol id="i-eye" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></g></symbol>
+  <symbol id="i-flag" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 21V3"/><path d="M5 4h11l-2.5 3.5L16 11H5"/></g></symbol>
+  <symbol id="i-seed" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21v-8"/><path d="M12 13C12 9 9 7 5 7c0 4 3 6 7 6z"/><path d="M12 11c0-3.5 3-5.5 7-5.5 0 3.5-3 5.5-7 5.5z"/></g></symbol>
+  <symbol id="i-hat" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4 2 9l10 5 10-5-10-5z"/><path d="M6 11.5V16c0 1.7 2.7 3 6 3s6-1.3 6-3v-4.5"/><path d="M22 9v5"/></g></symbol>
+  <symbol id="i-cam" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="13" rx="2.5"/><path d="M8 7l1.5-3h5L16 7"/><circle cx="12" cy="13" r="3.5"/></g></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></symbol>
+  <symbol id="i-quote" viewBox="0 0 24 24"><path d="M9.5 6C6.5 7.5 5 10 5 13.5c0 2.5 1.5 4 3.4 4 1.7 0 3-1.3 3-3 0-1.6-1.1-2.8-2.7-3 .3-1.8 1.3-3.2 2.8-4.2L9.5 6zm9 0c-3 1.5-4.5 4-4.5 7.5 0 2.5 1.5 4 3.4 4 1.7 0 3-1.3 3-3 0-1.6-1.1-2.8-2.7-3 .3-1.8 1.3-3.2 2.8-4.2L18.5 6z" fill="currentColor"/></symbol>
+  <symbol id="i-info" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 7.5v.5"/></g></symbol>
+  <symbol id="i-share" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="6" cy="12" r="2.5"/><circle cx="17.5" cy="5.5" r="2.5"/><circle cx="17.5" cy="18.5" r="2.5"/><path d="M8.3 10.8l7-4M8.3 13.2l7 4"/></g></symbol>
+</defs>
+</svg>
+
+<!-- ============ TOP STRIP ============ -->
+<div class="topstrip">🕊 &nbsp;Peace Education Initiative · Academic Year 2026–27 · <b>Navrachana Higher Secondary School, Sama</b></div>
+
+<!-- ============ NAV ============ -->
+<nav class="nav" id="nav" aria-label="Main navigation">
+  <div class="nav-inner">
+    <a class="brand" href="#home" aria-label="Together for Tomorrow — home">
+      <svg class="brand-mark" aria-hidden="true"><use href="#logo-mark"/></svg>
+      <span class="brand-name">Together <em>for</em> Tomorrow<span class="brand-sub">Inspiring Minds · Building Peace</span></span>
+    </a>
+    <button class="burger" id="burger" aria-expanded="false" aria-controls="navLinks" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+    <div class="nav-links" id="navLinks">
+      <a href="#home" class="active">Home</a>
+      <a href="#about">About</a>
+      <a href="#programme">Programme</a>
+      <a href="#projects">Projects</a>
+      <a href="#competitions">Competitions</a>
+      <a href="#roadmap">Roadmap</a>
+      <a href="#gallery">Gallery</a>
+      <a href="#testimonials">Testimonials</a>
+      <a href="#contact">Contact</a>
+      <a href="#contact" class="nav-cta">Join the Initiative</a>
+    </div>
+  </div>
+</nav>
+
+<main id="main">
+<!-- ============ HERO ============ -->
+<section class="hero" id="home">
+  <span class="deco" style="top:12%;left:3%;width:34px;height:34px;color:var(--lav)" aria-hidden="true"><svg><use href="#i-spark"/></svg></span>
+  <span class="deco" style="top:58%;left:1.5%;width:26px;height:26px;color:var(--green);animation-delay:1.4s" aria-hidden="true"><svg><use href="#i-leaf"/></svg></span>
+  <span class="deco" style="top:16%;right:2.5%;width:28px;height:28px;color:var(--gold-700);animation-delay:.8s" aria-hidden="true"><svg><use href="#i-spark"/></svg></span>
+  <div class="container">
+    <div class="hero-grid">
+      <div data-reveal="left">
+        <span class="hero-badge"><svg aria-hidden="true"><use href="#logo-mark"/></svg> Navrachana Higher Secondary School · Sama</span>
+        <h1>Together<br>for <span class="hl">Tomorrow<svg viewBox="0 0 220 22" preserveAspectRatio="none" aria-hidden="true"><path d="M6 16 C60 5 160 5 214 12"/></svg></span></h1>
+        <p class="hero-tag"><span class="tm1">Inspiring Minds</span><span class="tdot">.</span> <span class="tm2">Building Peace</span><span class="tdot">.</span></p>
+        <p class="hero-copy">Together for Tomorrow is the Peace Education initiative of Navrachana Higher Secondary School, Sama. Through experiential learning, collaborative projects and creative expression, students explore peace, global citizenship and sustainable development while developing empathy, leadership and lifelong values.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#contact">Join the Initiative <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+          <a class="btn btn-ghost" href="#programme">Explore the Programme <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+        </div>
+        <div class="hero-meta" aria-label="Programme highlights">
+          <span><i style="background:var(--blue)"></i>3 Workshops</span>
+          <span><i style="background:var(--green)"></i>4 Learning Projects</span>
+          <span><i style="background:var(--gold)"></i>2 Competitions</span>
+          <span><i style="background:var(--lav)"></i>1 Showcase</span>
+        </div>
+      </div>
+      <div class="hero-art-wrap" data-reveal="right" style="--d:.15s">
+        <!-- Hand-built hero illustration -->
+        <svg class="hero-art" viewBox="0 0 560 480" role="img" aria-labelledby="heroArtT">
+          <title id="heroArtT">Illustration of students collaborating around a table, with a dove, speech bubbles and celebration bunting</title>
+          <circle cx="285" cy="235" r="200" fill="#DCEEFB"/>
+          <circle cx="285" cy="235" r="222" fill="none" stroke="#21409A" stroke-opacity=".15" stroke-width="2" stroke-dasharray="3 11" stroke-linecap="round"/>
+          <circle cx="452" cy="122" r="54" fill="#E9E2F8"/>
+          <circle cx="90" cy="330" r="38" fill="#FDF1D2"/>
+          <g transform="translate(474,66)">
+            <g class="rays" stroke="#F4C542" stroke-width="4" stroke-linecap="round">
+              <line x1="0" y1="-38" x2="0" y2="-30"/><line x1="27" y1="-27" x2="21" y2="-21"/><line x1="38" y1="0" x2="30" y2="0"/><line x1="27" y1="27" x2="21" y2="21"/><line x1="0" y1="38" x2="0" y2="30"/><line x1="-27" y1="27" x2="-21" y2="21"/><line x1="-38" y1="0" x2="-30" y2="0"/><line x1="-27" y1="-27" x2="-21" y2="-21"/>
+            </g>
+            <circle r="22" fill="#F4C542"/>
+          </g>
+          <g fill="#fff" opacity=".92"><ellipse cx="120" cy="72" rx="34" ry="14"/><ellipse cx="148" cy="63" rx="24" ry="12"/></g>
+          <path d="M28 26 Q280 92 532 26" fill="none" stroke="#B9C8E8" stroke-width="3"/>
+          <path d="M80 41l15 2-6.5 17z" fill="#F4C542"/><path d="M130 49l15 2-6.5 17z" fill="#2E8B57"/><path d="M180 55l15 2-6.5 17z" fill="#21409A"/><path d="M230 59l15 2-6.5 17z" fill="#A794E0"/><path d="M280 60l15 2-6.5 17z" fill="#6FB7E8"/><path d="M330 59l15 2-6.5 17z" fill="#F4C542"/><path d="M380 55l15 2-6.5 17z" fill="#2E8B57"/><path d="M430 49l15 2-6.5 17z" fill="#21409A"/><path d="M480 41l15 2-6.5 17z" fill="#A794E0"/>
+          <g class="dove" transform="translate(52,118)"><use href="#doveFig"/></g>
+          <ellipse cx="285" cy="428" rx="240" ry="32" fill="#DDF0E3"/>
+          <!-- students -->
+          <g>
+            <circle cx="176" cy="231" r="10" fill="#2B2330"/><circle cx="190" cy="224" r="11" fill="#2B2330"/><circle cx="204" cy="231" r="10" fill="#2B2330"/>
+            <circle cx="190" cy="246" r="23" fill="#C68B59"/>
+            <circle cx="183" cy="244" r="2" fill="#14244F"/><circle cx="197" cy="244" r="2" fill="#14244F"/>
+            <path d="M184 253 q6 5 12 0" stroke="#14244F" stroke-width="2" fill="none" stroke-linecap="round"/>
+            <rect x="161" y="266" width="58" height="66" rx="27" fill="#2E8B57"/>
+            <path d="M172 284 C154 276 147 258 153 240" stroke="#C68B59" stroke-width="11" fill="none" stroke-linecap="round"/>
+            <circle cx="153" cy="238" r="6.5" fill="#C68B59"/>
+            <g transform="translate(122,208) rotate(-12)"><path d="M0 12 L30 0 L20 22 L14 15 Z" fill="#fff" stroke="#B9C8E8" stroke-width="2" stroke-linejoin="round"/><path d="M14 15 L30 0" stroke="#B9C8E8" stroke-width="2"/></g>
+            <path d="M208 288 C216 300 218 312 214 322" stroke="#C68B59" stroke-width="11" fill="none" stroke-linecap="round"/>
+          </g>
+          <g>
+            <path d="M255 231 c0-15 11-26 25-26 s25 11 25 26 c-7-7-15-10-25-10 s-18 3-25 10z" fill="#33261F"/>
+            <circle cx="280" cy="232" r="25" fill="#F1C39B"/>
+            <circle cx="272" cy="230" r="2.2" fill="#14244F"/><circle cx="288" cy="230" r="2.2" fill="#14244F"/>
+            <path d="M273 240 q7 6 14 0" stroke="#14244F" stroke-width="2" fill="none" stroke-linecap="round"/>
+            <circle cx="266" cy="238" r="3.2" fill="#E89A8C" opacity=".55"/><circle cx="294" cy="238" r="3.2" fill="#E89A8C" opacity=".55"/>
+            <rect x="249" y="254" width="62" height="72" rx="29" fill="#21409A"/>
+            <path d="M259 274 C254 292 254 306 260 318" stroke="#F1C39B" stroke-width="11" fill="none" stroke-linecap="round"/>
+            <path d="M301 274 C306 292 306 306 300 318" stroke="#F1C39B" stroke-width="11" fill="none" stroke-linecap="round"/>
+          </g>
+          <g>
+            <circle cx="370" cy="219" r="12" fill="#241C2B"/>
+            <path d="M347 244 a23 23 0 0 1 46 0 z" fill="#241C2B"/>
+            <circle cx="370" cy="246" r="23" fill="#9C6644"/>
+            <circle cx="363" cy="244" r="2" fill="#14244F"/><circle cx="377" cy="244" r="2" fill="#14244F"/>
+            <path d="M364 253 q6 5 12 0" stroke="#14244F" stroke-width="2" fill="none" stroke-linecap="round"/>
+            <rect x="341" y="266" width="58" height="66" rx="27" fill="#F4C542"/>
+            <path d="M352 286 C344 298 340 306 342 314" stroke="#9C6644" stroke-width="11" fill="none" stroke-linecap="round"/>
+            <g transform="translate(314,298) rotate(-8)"><rect width="38" height="26" rx="3" fill="#fff" stroke="#21409A" stroke-width="2"/><line x1="19" y1="0" x2="19" y2="26" stroke="#21409A" stroke-width="2"/><path d="M6 8h8M6 14h8M25 8h8M25 14h8" stroke="#B9C8E8" stroke-width="2" stroke-linecap="round"/></g>
+            <path d="M388 288 C396 300 398 312 394 322" stroke="#9C6644" stroke-width="11" fill="none" stroke-linecap="round"/>
+          </g>
+          <!-- table -->
+          <path d="M133 332 v8 c0 11 67 22 152 22 s152-11 152-22 v-8" fill="#EAF2FB" stroke="#D9E4F6" stroke-width="2"/>
+          <ellipse cx="285" cy="332" rx="152" ry="24" fill="#FFFFFF" stroke="#D9E4F6" stroke-width="2"/>
+          <g transform="translate(168,302)"><rect y="12" width="46" height="9" rx="2.5" fill="#2E8B57"/><rect x="3" y="4" width="40" height="9" rx="2.5" fill="#F4C542"/><rect x="6" y="-3" width="34" height="8" rx="2.5" fill="#21409A"/></g>
+          <g transform="translate(252,286)"><rect x="4" width="56" height="34" rx="4" fill="#17306F"/><rect x="8" y="4" width="48" height="26" rx="2" fill="#DDEBFF"/><path d="M14 24 l6-8 5 5 7-9 8 12" stroke="#2E8B57" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/><rect x="-2" y="34" width="68" height="7" rx="3.5" fill="#9FB4D9"/></g>
+          <g transform="translate(215,318) rotate(-6)"><rect width="30" height="20" rx="3" fill="#fff" stroke="#D9E4F6" stroke-width="2"/><path d="M15 15 c-4-3-6-5-6-7.6 0-1.9 1.5-3.4 3.4-3.4 1.1 0 2 .6 2.6 1.5.6-.9 1.5-1.5 2.6-1.5 1.9 0 3.4 1.5 3.4 3.4 0 2.6-2 4.6-6 7.6z" fill="#F4C542"/></g>
+          <g transform="translate(388,298)"><path d="M14 14 C14 4 20 0 26 0 C26 8 22 13 14 14Z" fill="#2E8B57"/><path d="M12 14 C12 6 6 2 0 3 C1 10 5 14 12 14Z" fill="#3FA46C"/><path d="M13 14 v8" stroke="#2E8B57" stroke-width="2.5"/><path d="M4 22 h18 l-3 12 h-12 z" fill="#F4C542" stroke="#E3AE23" stroke-width="1.5"/></g>
+          <!-- speech bubbles -->
+          <g class="bob" style="--bd:0s">
+            <rect x="118" y="148" width="66" height="50" rx="16" fill="#fff" stroke="#D9E4F6" stroke-width="2"/>
+            <path d="M140 196 l-4 15 15-9 z" fill="#fff"/>
+            <path d="M151 186 c-7-6-11-10-11-15 0-3.8 3-7 6.8-7 2.3 0 4.1 1.3 4.9 3.1.8-1.8 2.6-3.1 4.9-3.1 3.8 0 6.8 3.2 6.8 7 0 5-4 9-11 15z" fill="#F4C542" stroke="#E3AE23" stroke-width="1.5"/>
+          </g>
+          <g class="bob" style="--bd:1.2s">
+            <rect x="247" y="126" width="66" height="50" rx="16" fill="#fff" stroke="#D9E4F6" stroke-width="2"/>
+            <path d="M272 174 l-2 15 13-10 z" fill="#fff"/>
+            <path d="M280 138 a10 10 0 0 1 6 18 c-1.2 1-2 2.2-2.3 3.8 h-7.4 c-.3-1.6-1.1-2.8-2.3-3.8 a10 10 0 0 1 6-18z" fill="#F4C542" stroke="#E3AE23" stroke-width="1.5"/>
+            <path d="M276 163 h8 M277 166.5 h6" stroke="#94A3C4" stroke-width="2" stroke-linecap="round"/>
+          </g>
+          <g class="bob" style="--bd:2.2s">
+            <rect x="376" y="148" width="66" height="50" rx="16" fill="#fff" stroke="#D9E4F6" stroke-width="2"/>
+            <path d="M400 196 l2 15 12-10 z" fill="#fff"/>
+            <circle cx="409" cy="172" r="13" fill="#BFE0F7" stroke="#21409A" stroke-width="2"/>
+            <ellipse cx="409" cy="172" rx="5.5" ry="13" fill="none" stroke="#21409A" stroke-width="1.6"/>
+            <line x1="396" y1="172" x2="422" y2="172" stroke="#21409A" stroke-width="1.6"/>
+          </g>
+          <text x="86" y="348" font-size="30" fill="#21409A" opacity=".45" font-family="Fredoka" font-weight="600">π</text>
+          <text x="452" y="262" font-size="26" fill="#2E8B57" opacity=".5" font-family="Fredoka" font-weight="600">+</text>
+          <text x="468" y="332" font-size="26" fill="#C99A1F" opacity=".55" font-family="Fredoka" font-weight="600">÷</text>
+          <use href="#i-spark" x="130" y="100" width="18" height="18" color="#F4C542"/>
+          <use href="#i-spark" x="416" y="176" width="14" height="14" color="#A794E0"/>
+          <use href="#i-leaf" x="492" y="294" width="20" height="20" color="#2E8B57" opacity=".6"/>
+        </svg>
+      </div>
+    </div>
+
+    <!-- Animated stats -->
+    <div class="stats" data-reveal="pop" style="--d:.25s" role="list" aria-label="Programme at a glance">
+      <div class="stat" role="listitem"><b><span class="count" data-target="40">0</span>+</b><span>Student Participants</span></div>
+      <div class="stat" role="listitem"><b><span class="count" data-target="3">0</span></b><span>Core Workshops</span></div>
+      <div class="stat" role="listitem"><b><span class="count" data-target="4">0</span></b><span>Learning Projects</span></div>
+      <div class="stat" role="listitem"><b><span class="count" data-target="2">0</span></b><span>Competitions</span></div>
+      <div class="stat" role="listitem"><b><span class="count" data-target="1">0</span></b><span>Culmination Event</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ABOUT ============ -->
+<section class="about" id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-art" data-reveal="left">
+        <svg viewBox="0 0 480 430" role="img" aria-labelledby="aboutArtT">
+          <title id="aboutArtT">Illustration of a sapling growing from an open book, with a dove and a globe</title>
+          <circle cx="240" cy="215" r="185" fill="#E7E0F7"/>
+          <circle cx="240" cy="215" r="205" fill="none" stroke="#6F5BB5" stroke-opacity=".2" stroke-width="2" stroke-dasharray="3 11" stroke-linecap="round"/>
+          <g transform="translate(84,84)"><g stroke="#F4C542" stroke-width="3.5" stroke-linecap="round"><line x1="0" y1="-26" x2="0" y2="-20"/><line x1="18" y1="-18" x2="14" y2="-14"/><line x1="26" y1="0" x2="20" y2="0"/><line x1="18" y1="18" x2="14" y2="14"/><line x1="0" y1="26" x2="0" y2="20"/><line x1="-18" y1="18" x2="-14" y2="14"/><line x1="-26" y1="0" x2="-20" y2="0"/><line x1="-18" y1="-18" x2="-14" y2="-14"/></g><circle r="14" fill="#F4C542"/></g>
+          <g fill="#fff" opacity=".9"><ellipse cx="392" cy="66" rx="30" ry="12"/><ellipse cx="414" cy="58" rx="20" ry="10"/></g>
+          <g transform="translate(110,152)">
+            <circle r="36" fill="#BFE0F7" stroke="#21409A" stroke-width="2.5"/>
+            <ellipse rx="15" ry="36" fill="none" stroke="#21409A" stroke-width="1.8"/>
+            <line x1="-36" y1="0" x2="36" y2="0" stroke="#21409A" stroke-width="1.8"/>
+            <path d="M-32 -14 Q0 -2 32 -14 M-32 14 Q0 2 32 14" fill="none" stroke="#21409A" stroke-width="1.8"/>
+            <path d="M-14 -20 c8 -4 16 -2 20 4 c-6 6 -14 6 -20 2z" fill="#2E8B57" opacity=".85"/>
+            <path d="M2 8 c8 -2 14 2 14 8 c-8 4 -16 0 -14 -8z" fill="#2E8B57" opacity=".85"/>
+          </g>
+          <g class="dove" transform="translate(316,72) scale(.82)"><use href="#doveFig"/></g>
+          <path d="M240 316 C238 282 242 250 240 208" stroke="#2E8B57" stroke-width="6" fill="none" stroke-linecap="round"/>
+          <path d="M239 284 C222 282 210 270 210 254 C226 256 238 268 239 284 Z" fill="#2E8B57"/>
+          <path d="M241 260 C258 258 270 246 270 230 C254 232 242 244 241 260 Z" fill="#3FA46C"/>
+          <path d="M240 238 C226 236 216 226 216 212 C230 214 240 224 240 238 Z" fill="#6FB7E8"/>
+          <path d="M241 218 C254 216 262 207 262 195 C250 197 242 206 241 218 Z" fill="#F4C542"/>
+          <path d="M240 202 c-10-9-16-14-16-21.5 0-5.6 4.4-10 10-10 3.4 0 6 1.9 7 4.5 1-2.6 3.6-4.5 7-4.5 5.6 0 10 4.4 10 10 0 7.5-6 12.5-16 21.5z" fill="#F4C542" stroke="#E3AE23" stroke-width="2"/>
+          <g transform="translate(240,318)">
+            <path d="M-118 8 C-70 -6 -20 -6 0 4 C20 -6 70 -6 118 8 L118 26 C70 12 20 12 0 22 C-20 12 -70 12 -118 26 Z" fill="#21409A"/>
+            <path d="M-112 2 C-68 -10 -22 -10 0 0 L0 16 C-22 6 -68 6 -112 18 Z" fill="#fff" stroke="#D9E4F6" stroke-width="1.5"/>
+            <path d="M112 2 C68 -10 22 -10 0 0 L0 16 C22 6 68 6 112 18 Z" fill="#fff" stroke="#D9E4F6" stroke-width="1.5"/>
+            <path d="M-96 6 C-64 -2 -32 -2 -12 4 M-96 12 C-64 4 -32 4 -12 10" stroke="#D9E4F6" stroke-width="2" fill="none" stroke-linecap="round"/>
+            <path d="M96 6 C64 -2 32 -2 12 4 M96 12 C64 4 32 4 12 10" stroke="#D9E4F6" stroke-width="2" fill="none" stroke-linecap="round"/>
+          </g>
+          <g transform="translate(352,236) rotate(24)"><rect y="-8" width="14" height="9" rx="3" fill="#6FB7E8"/><rect width="14" height="64" rx="4" fill="#F4C542" stroke="#E3AE23" stroke-width="1.5"/><path d="M0 64 L7 80 L14 64 Z" fill="#F1C39B"/><path d="M4.5 74 L7 80 L9.5 74 Z" fill="#14244F"/></g>
+          <use href="#i-spark" x="168" y="104" width="18" height="18" color="#F4C542"/>
+          <use href="#i-spark" x="330" y="150" width="14" height="14" color="#A794E0"/>
+          <use href="#i-spark" x="386" y="298" width="16" height="16" color="#2E8B57"/>
+        </svg>
+      </div>
+      <div data-reveal="right">
+        <span class="eyebrow"><i class="dot"></i>About the Initiative</span>
+        <h2>About <span class="hl">Together for Tomorrow<svg viewBox="0 0 220 22" preserveAspectRatio="none" aria-hidden="true"><path d="M6 16 C60 5 160 5 214 12"/></svg></span></h2>
+        <p>Together for Tomorrow is an experiential learning initiative that introduces students to the values of <strong>peace, empathy, cooperation and responsible global citizenship</strong>. Through workshops, classroom activities, projects and competitions, the programme encourages students to become thoughtful individuals who contribute positively to their communities and the world around them.</p>
+        <p>Rather than a one-time event, the initiative weaves peace education into the rhythm of the school year — one workshop at a time, one project at a time, one act of kindness at a time.</p>
+      </div>
+    </div>
+
+    <!-- Vision & Mission -->
+    <div class="vm-grid">
+      <article class="vm-card" data-reveal style="--d:.05s">
+        <div class="vm-icon" style="background:var(--green-100);color:var(--green)"><svg><use href="#i-eye"/></svg></div>
+        <h3>Our Vision</h3>
+        <p>To nurture compassionate, resilient and globally responsible citizens who contribute towards peaceful communities and a sustainable future.</p>
+        <svg class="wm" aria-hidden="true"><use href="#i-seed"/></svg>
+      </article>
+      <article class="vm-card mission" data-reveal style="--d:.15s">
+        <div class="vm-icon" style="background:var(--sky-100);color:var(--blue)"><svg><use href="#i-flag"/></svg></div>
+        <h3>Our Mission</h3>
+        <p>To integrate peace education into everyday learning through meaningful experiences that inspire kindness, collaboration, critical thinking and responsible action.</p>
+        <svg class="wm" aria-hidden="true"><use href="#i-hat"/></svg>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PILLARS ============ -->
+<section class="pillars" id="pillars">
+  <div class="container">
+    <div class="sec-head center" data-reveal>
+      <span class="eyebrow lav"><i class="dot"></i>What Guides Us</span>
+      <h2>Programme Pillars</h2>
+      <p>Four interconnected pillars give the initiative its shape — each one feeding into the workshops, projects and competitions across the year.</p>
+    </div>
+    <div class="pillar-grid">
+      <article class="pillar pc-blue" data-reveal style="--d:.05s">
+        <span class="num">01</span>
+        <div class="p-icon"><svg><use href="#i-heart"/></svg></div>
+        <h3>Peace Education</h3>
+        <p>Helping students understand empathy, peaceful communication and conflict resolution.</p>
+      </article>
+      <article class="pillar pc-green" data-reveal style="--d:.12s">
+        <span class="num">02</span>
+        <div class="p-icon"><svg><use href="#i-globe"/></svg></div>
+        <h3>Global Citizenship Education</h3>
+        <p>Encouraging learners to appreciate diversity and become responsible global citizens.</p>
+      </article>
+      <article class="pillar pc-gold" data-reveal style="--d:.19s">
+        <span class="num">03</span>
+        <div class="p-icon"><svg><use href="#i-leaf"/></svg></div>
+        <h3>Education for Sustainable Development</h3>
+        <p>Introducing sustainability through the lens of SDG 4.7 and responsible living.</p>
+      </article>
+      <article class="pillar pc-lav" data-reveal style="--d:.26s">
+        <span class="num">04</span>
+        <div class="p-icon"><svg><use href="#i-users"/></svg></div>
+        <h3>Student Engagement</h3>
+        <p>Learning through collaborative activities, creative projects and reflective experiences.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ WORKSHOPS ============ -->
+<section class="workshops" id="programme">
+  <div class="container">
+    <div class="sec-head" data-reveal>
+      <span class="eyebrow"><i class="dot"></i>The Programme</span>
+      <h2>Core Workshops</h2>
+      <p>Three workshops, one for each week in August, introduce the ideas that the projects and competitions build upon. All dates are tentative.</p>
+    </div>
+    <div class="ws-grid">
+      <article class="ws-card ac-blue" data-reveal style="--d:.05s">
+        <div class="ws-top"><span class="ws-num">01</span><span class="status"><i></i>Upcoming</span></div>
+        <div class="ws-icon"><svg><use href="#i-olive"/></svg></div>
+        <h3>Culture of Peace</h3>
+        <p>Understanding empathy, peaceful coexistence and positive relationships.</p>
+        <div class="ws-date"><svg><use href="#i-cal"/></svg>12 August 2026 <span class="tag tag-warm">Tentative</span></div>
+      </article>
+      <article class="ws-card ac-green" data-reveal style="--d:.15s">
+        <div class="ws-top"><span class="ws-num">02</span><span class="status"><i></i>Upcoming</span></div>
+        <div class="ws-icon"><svg><use href="#i-globe"/></svg></div>
+        <h3>Global Citizenship Education</h3>
+        <p>Exploring diversity, inclusion and our responsibilities as global citizens.</p>
+        <div class="ws-date"><svg><use href="#i-cal"/></svg>19 August 2026 <span class="tag tag-warm">Tentative</span></div>
+      </article>
+      <article class="ws-card ac-gold" data-reveal style="--d:.25s">
+        <div class="ws-top"><span class="ws-num">03</span><span class="status"><i></i>Upcoming</span></div>
+        <div class="ws-icon"><svg><use href="#i-leaf"/></svg></div>
+        <h3>Education for Sustainable Development</h3>
+        <p>Understanding sustainability through education and the principles of SDG 4.7.</p>
+        <div class="ws-date"><svg><use href="#i-cal"/></svg>26 August 2026 <span class="tag tag-warm">Tentative</span></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PROJECTS ============ -->
+<section class="projects" id="projects">
+  <div class="container">
+    <div class="sec-head" data-reveal>
+      <span class="eyebrow green"><i class="dot"></i>Learning by Doing</span>
+      <h2>Learning Projects</h2>
+      <p>Four hands-on projects run alongside the workshops, turning ideas about peace and cooperation into everyday classroom practice.</p>
+    </div>
+    <div class="proj-grid">
+      <!-- Project 1 -->
+      <article class="proj" data-reveal style="--d:.05s">
+        <div class="proj-art">
+          <span class="proj-num">1</span>
+          <svg viewBox="0 0 320 170" role="img" aria-label="Two speech bubbles with a heart — Culture of Peace illustration">
+            <rect width="320" height="170" fill="#E8F1FD"/>
+            <circle cx="160" cy="85" r="66" fill="#fff" opacity=".55"/>
+            <circle cx="40" cy="140" r="26" fill="#fff" opacity=".4"/><circle cx="290" cy="30" r="20" fill="#fff" opacity=".4"/>
+            <rect x="66" y="42" width="92" height="62" rx="18" fill="#21409A"/>
+            <path d="M98 104 l-8 17 21-9 z" fill="#21409A"/>
+            <path d="M112 90 C103 82 98 77 98 70.5 C98 65.8 101.6 62 106.2 62 C109 62 111.2 63.6 112 65.8 C112.8 63.6 115 62 117.8 62 C122.4 62 126 65.8 126 70.5 C126 77 121 82 112 90 Z" fill="#fff"/>
+            <rect x="162" y="62" width="92" height="62" rx="18" fill="#2E8B57"/>
+            <path d="M228 124 l10 15 4-17 z" fill="#2E8B57"/>
+            <path d="M186 108 C193 98 201 91 213 85" stroke="#fff" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+            <path d="M196 96 c-3.5-1-5.5-4-4.5-7.5 c3.5 1 5.5 4 4.5 7.5z" fill="#fff"/>
+            <path d="M204 89 c-2.5-3 -2.5-6.5 0-9.5 c2.5 3 2.5 6.5 0 9.5z" fill="#fff"/>
+            <use href="#i-spark" x="46" y="34" width="16" height="16" color="#F4C542"/>
+            <use href="#i-spark" x="266" y="44" width="13" height="13" color="#A794E0"/>
+            <use href="#i-spark" x="278" y="126" width="15" height="15" color="#2E8B57"/>
+          </svg>
+        </div>
+        <div class="proj-body">
+          <h3>Culture of Peace</h3>
+          <p>Exploring peace through classroom discussions and collaborative learning.</p>
+          <div class="outcomes">
+            <h4>Learning outcomes</h4>
+            <ul>
+              <li><svg><use href="#i-check"/></svg>Empathy and active listening in everyday conversations</li>
+              <li><svg><use href="#i-check"/></svg>Respectful communication across differences</li>
+              <li><svg><use href="#i-check"/></svg>Calmer, kinder ways of resolving disagreements</li>
+            </ul>
+          </div>
+          <div class="proj-foot"><svg><use href="#i-clock"/></svg>Expected duration: approx. 2–3 weeks <span class="tag tag-warm">Tentative</span></div>
+        </div>
+      </article>
+      <!-- Project 2 -->
+      <article class="proj" data-reveal style="--d:.12s">
+        <div class="proj-art">
+          <span class="proj-num">2</span>
+          <svg viewBox="0 0 320 170" role="img" aria-label="Dice and maths symbols — Co-operative Maths Games illustration">
+            <rect width="320" height="170" fill="#E6F4EC"/>
+            <circle cx="160" cy="85" r="66" fill="#fff" opacity=".55"/>
+            <rect x="118" y="46" width="64" height="64" rx="14" fill="#fff" stroke="#21409A" stroke-width="2.5"/>
+            <circle cx="134" cy="62" r="4.5" fill="#21409A"/><circle cx="166" cy="62" r="4.5" fill="#21409A"/><circle cx="150" cy="78" r="4.5" fill="#2E8B57"/><circle cx="134" cy="94" r="4.5" fill="#21409A"/><circle cx="166" cy="94" r="4.5" fill="#21409A"/>
+            <g transform="rotate(12 214 96)"><rect x="190" y="72" width="48" height="48" rx="10" fill="#F4C542" stroke="#C99A1F" stroke-width="2.5"/><circle cx="204" cy="86" r="4" fill="#14244F"/><circle cx="214" cy="96" r="4" fill="#14244F"/><circle cx="224" cy="106" r="4" fill="#14244F"/></g>
+            <text x="72" y="76" font-size="30" fill="#2E8B57" font-family="Fredoka" font-weight="600">+</text>
+            <text x="246" y="58" font-size="26" fill="#21409A" font-family="Fredoka" font-weight="600">×</text>
+            <text x="84" y="136" font-size="26" fill="#C99A1F" font-family="Fredoka" font-weight="600">÷</text>
+            <use href="#i-spark" x="270" y="128" width="15" height="15" color="#A794E0"/>
+          </svg>
+        </div>
+        <div class="proj-body">
+          <h3>Co-operative Maths Games</h3>
+          <p>Learning teamwork and cooperation through engaging mathematical activities.</p>
+          <div class="outcomes">
+            <h4>Learning outcomes</h4>
+            <ul>
+              <li><svg><use href="#i-check"/></svg>Working together towards a shared goal</li>
+              <li><svg><use href="#i-check"/></svg>Mathematical confidence through play</li>
+              <li><svg><use href="#i-check"/></svg>Inclusive participation — everyone has a role</li>
+            </ul>
+          </div>
+          <div class="proj-foot"><svg><use href="#i-clock"/></svg>Expected duration: approx. 2–3 weeks <span class="tag tag-warm">Tentative</span></div>
+        </div>
+      </article>
+      <!-- Project 3 -->
+      <article class="proj" data-reveal style="--d:.19s">
+        <div class="proj-art">
+          <span class="proj-num">3</span>
+          <svg viewBox="0 0 320 170" role="img" aria-label="Bar graph topped with hearts — Kindness Graph illustration">
+            <rect width="320" height="170" fill="#FDF2D9"/>
+            <circle cx="160" cy="85" r="66" fill="#fff" opacity=".5"/>
+            <path d="M80 38 V132 H252" stroke="#C99A1F" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+            <rect x="95" y="100" width="28" height="32" rx="6" fill="#A794E0"/>
+            <rect x="135" y="84" width="28" height="48" rx="6" fill="#6FB7E8"/>
+            <rect x="175" y="66" width="28" height="66" rx="6" fill="#2E8B57"/>
+            <rect x="215" y="48" width="28" height="84" rx="6" fill="#F4C542"/>
+            <path d="M109 96 c-5-4.2-7.8-7-7.8-10.5 0-2.7 2.1-4.9 4.8-4.9 1.6 0 3 .9 3.5 2.2.5-1.3 1.9-2.2 3.5-2.2 2.7 0 4.8 2.2 4.8 4.9 0 3.5-2.8 6.3-7.8 10.5z" fill="#F4C542"/>
+            <path d="M149 80 c-5-4.2-7.8-7-7.8-10.5 0-2.7 2.1-4.9 4.8-4.9 1.6 0 3 .9 3.5 2.2.5-1.3 1.9-2.2 3.5-2.2 2.7 0 4.8 2.2 4.8 4.9 0 3.5-2.8 6.3-7.8 10.5z" fill="#F4C542"/>
+            <path d="M189 62 c-5-4.2-7.8-7-7.8-10.5 0-2.7 2.1-4.9 4.8-4.9 1.6 0 3 .9 3.5 2.2.5-1.3 1.9-2.2 3.5-2.2 2.7 0 4.8 2.2 4.8 4.9 0 3.5-2.8 6.3-7.8 10.5z" fill="#F4C542"/>
+            <path d="M229 44 c-5-4.2-7.8-7-7.8-10.5 0-2.7 2.1-4.9 4.8-4.9 1.6 0 3 .9 3.5 2.2.5-1.3 1.9-2.2 3.5-2.2 2.7 0 4.8 2.2 4.8 4.9 0 3.5-2.8 6.3-7.8 10.5z" fill="#fff" stroke="#C99A1F" stroke-width="1.5"/>
+            <use href="#i-spark" x="256" y="98" width="15" height="15" color="#2E8B57"/>
+            <use href="#i-spark" x="56" y="52" width="13" height="13" color="#6FB7E8"/>
+          </svg>
+        </div>
+        <div class="proj-body">
+          <h3>Kindness Graph</h3>
+          <p>Encouraging and reflecting upon everyday acts of kindness within the school community.</p>
+          <div class="outcomes">
+            <h4>Learning outcomes</h4>
+            <ul>
+              <li><svg><use href="#i-check"/></svg>Noticing and appreciating everyday kindness</li>
+              <li><svg><use href="#i-check"/></svg>Recording and reflecting on simple data</li>
+              <li><svg><use href="#i-check"/></svg>A warmer, more caring classroom culture</li>
+            </ul>
+          </div>
+          <div class="proj-foot"><svg><use href="#i-clock"/></svg>Expected duration: runs across the programme <span class="tag tag-warm">Tentative</span></div>
+        </div>
+      </article>
+      <!-- Project 4 -->
+      <article class="proj" data-reveal style="--d:.26s">
+        <div class="proj-art">
+          <span class="proj-num">4</span>
+          <svg viewBox="0 0 320 170" role="img" aria-label="Globe and abacus — Maths Across Cultures illustration">
+            <rect width="320" height="170" fill="#EFEAFB"/>
+            <circle cx="160" cy="85" r="66" fill="#fff" opacity=".5"/>
+            <circle cx="126" cy="85" r="44" fill="#BFE0F7" stroke="#21409A" stroke-width="2.5"/>
+            <ellipse cx="126" cy="85" rx="19" ry="44" fill="none" stroke="#21409A" stroke-width="1.8"/>
+            <line x1="82" y1="85" x2="170" y2="85" stroke="#21409A" stroke-width="1.8"/>
+            <path d="M88 62 Q126 74 164 62 M88 108 Q126 96 164 108" fill="none" stroke="#21409A" stroke-width="1.8"/>
+            <path d="M108 62 c8-4 16-2 20 4 c-6 6-14 6-20 2z" fill="#2E8B57" opacity=".85"/>
+            <path d="M132 96 c8-2 14 2 14 8 c-8 4-16 0-14-8z" fill="#2E8B57" opacity=".85"/>
+            <rect x="196" y="52" width="86" height="66" rx="9" fill="#fff" stroke="#21409A" stroke-width="2.5"/>
+            <path d="M202 70 h74 M202 87 h74 M202 104 h74" stroke="#C7D4EE" stroke-width="2.5"/>
+            <circle cx="216" cy="70" r="6" fill="#21409A"/><circle cx="232" cy="70" r="6" fill="#21409A"/><circle cx="252" cy="70" r="6" fill="#F4C542" stroke="#C99A1F"/>
+            <circle cx="222" cy="87" r="6" fill="#2E8B57"/><circle cx="238" cy="87" r="6" fill="#2E8B57"/><circle cx="258" cy="87" r="6" fill="#A794E0"/>
+            <circle cx="216" cy="104" r="6" fill="#F4C542" stroke="#C99A1F"/><circle cx="244" cy="104" r="6" fill="#6FB7E8"/>
+            <text x="60" y="52" font-size="26" fill="#6F5BB5" font-family="Fredoka" font-weight="600">π</text>
+            <use href="#i-spark" x="272" y="30" width="14" height="14" color="#F4C542"/>
+          </svg>
+        </div>
+        <div class="proj-body">
+          <h3>Maths Across Cultures</h3>
+          <p>Discovering mathematical ideas from different cultures to celebrate diversity and inclusion.</p>
+          <div class="outcomes">
+            <h4>Learning outcomes</h4>
+            <ul>
+              <li><svg><use href="#i-check"/></svg>Appreciating contributions from many cultures</li>
+              <li><svg><use href="#i-check"/></svg>Curiosity about mathematical ideas around the world</li>
+              <li><svg><use href="#i-check"/></svg>Inclusion through shared discovery</li>
+            </ul>
+          </div>
+          <div class="proj-foot"><svg><use href="#i-clock"/></svg>Expected duration: approx. 2–3 weeks <span class="tag tag-warm">Tentative</span></div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ COMPETITIONS ============ -->
+<section class="comps" id="competitions">
+  <div class="container">
+    <div class="sec-head" data-reveal>
+      <span class="eyebrow gold"><i class="dot"></i>Express Yourself</span>
+      <h2>Competitions</h2>
+      <p>Two writing competitions invite students to reflect deeply on the themes of the programme. Both open for registration on 1 September 2026.</p>
+    </div>
+    <div class="comp-grid">
+      <article class="comp c-blue" data-reveal style="--d:.05s">
+        <div class="comp-head">
+          <div class="comp-icon"><svg><use href="#i-pen"/></svg></div>
+          <div>
+            <h3>Essay Writing Competition</h3>
+            <p class="comp-sub">A written reflection on peace, empathy and responsible citizenship in everyday life.</p>
+          </div>
+        </div>
+        <div class="comp-dates">
+          <div class="cd-row"><svg><use href="#i-cal"/></svg><span>Registration opens</span><b>1 September 2026</b></div>
+          <div class="cd-row"><svg><use href="#i-clock"/></svg><span>Submission deadline</span><b>20 September 2026</b></div>
+          <div class="cd-row"><svg><use href="#i-star"/></svg><span>Results</span><b>30 September 2026</b></div>
+        </div>
+        <div class="comp-rec"><svg><use href="#i-medal"/></svg>Recognition: Certificate of Excellence</div>
+      </article>
+      <article class="comp c-green" data-reveal style="--d:.15s">
+        <div class="comp-head">
+          <div class="comp-icon"><svg><use href="#i-doc"/></svg></div>
+          <div>
+            <h3>Research Paper Competition</h3>
+            <p class="comp-sub">A guided research piece exploring themes of peace education and sustainable development.</p>
+          </div>
+        </div>
+        <div class="comp-dates">
+          <div class="cd-row"><svg><use href="#i-cal"/></svg><span>Registration opens</span><b>1 September 2026</b></div>
+          <div class="cd-row"><svg><use href="#i-clock"/></svg><span>Submission deadline</span><b>25 September 2026</b></div>
+          <div class="cd-row"><svg><use href="#i-star"/></svg><span>Results</span><b>10 October 2026</b></div>
+        </div>
+        <div class="comp-flag"><svg><use href="#i-spark"/></svg>Selected papers may be considered for publication.</div>
+        <div class="comp-rec"><svg><use href="#i-medal"/></svg>Recognition: Certificate of Excellence</div>
+      </article>
+    </div>
+    <div style="margin-top:2rem" data-reveal>
+      <p class="note"><svg><use href="#i-info"/></svg>All competition dates are tentative and will be confirmed by the school through class notices.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ROADMAP ============ -->
+<section class="roadmap" id="roadmap">
+  <div class="container">
+    <div class="sec-head center" data-reveal>
+      <span class="eyebrow"><i class="dot"></i>Week by Week</span>
+      <h2>Programme Roadmap</h2>
+      <p>How the journey unfolds — from the first co-operative game to the final showcase of student work.</p>
+    </div>
+    <div class="tl" id="tlLine">
+      <div class="tl-item" data-reveal>
+        <span class="tl-dot" style="--dc:var(--blue)">W1</span>
+        <div class="tl-card">
+          <span class="tag tag-sky tl-tag" style="display:inline-block">Week 1 · Learning Project</span>
+          <h3>Co-operative Maths Games</h3>
+          <p class="tl-goal"><b>Learning Goal —</b> Building cooperation through collaborative mathematical activities.</p>
+        </div>
+      </div>
+      <div class="tl-item" data-reveal style="--d:.1s">
+        <span class="tl-dot" style="--dc:var(--green)">W2</span>
+        <div class="tl-card">
+          <span class="tag tag-green tl-tag" style="display:inline-block">Week 2 · Learning Project</span>
+          <h3>Kindness Graph</h3>
+          <p class="tl-goal"><b>Learning Goal —</b> Promoting empathy through everyday acts of kindness.</p>
+        </div>
+      </div>
+      <div class="tl-item" data-reveal style="--d:.2s">
+        <span class="tl-dot" style="--dc:var(--gold-700)">W3</span>
+        <div class="tl-card">
+          <span class="tag tag-warm tl-tag" style="display:inline-block">Week 3 · Learning Project</span>
+          <h3>Maths Across Cultures</h3>
+          <p class="tl-goal"><b>Learning Goal —</b> Celebrating diversity through mathematics.</p>
+        </div>
+      </div>
+      <div class="tl-item" data-reveal style="--d:.3s">
+        <span class="tl-dot" style="--dc:var(--lav-700)"><svg><use href="#i-users"/></svg></span>
+        <div class="tl-card">
+          <span class="tag tag-lav tl-tag" style="display:inline-block">Additional Programme</span>
+          <h3>Teacher–Parent Workshop</h3>
+          <p class="tl-goal"><b>Purpose —</b> Building a shared understanding of peace education at home and school.</p>
+        </div>
+      </div>
+      <div class="tl-item" data-reveal style="--d:.4s">
+        <span class="tl-dot" style="--dc:var(--navy)"><svg><use href="#i-trophy"/></svg></span>
+        <div class="tl-card finale">
+          <span class="tag tag-warm tl-tag" style="display:inline-block">Programme Culmination</span>
+          <h3>Students Contribute Articles For…</h3>
+          <p class="tl-goal">The learning journey ends with student writing shared across three platforms.</p>
+          <div class="tl-chips">
+            <span><svg><use href="#i-star"/></svg>Culmination Event</span>
+            <span><svg><use href="#i-book"/></svg>School Magazine</span>
+            <span><svg><use href="#i-news"/></svg>Newspaper</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PROGRAMME TIMELINE ============ -->
+<section class="schedule" id="timeline">
+  <div class="container">
+    <div class="sec-head" data-reveal>
+      <span class="eyebrow green"><i class="dot"></i>Save the Dates</span>
+      <h2>Programme Timeline</h2>
+      <p>A simple schedule of the school programme across the term.</p>
+    </div>
+    <div class="sched-grid">
+      <div class="sched" data-reveal style="--d:.02s">
+        <div class="datebox db-blue"><b>12</b><span>Aug 2026</span></div>
+        <div><h3>Culture of Peace Workshop</h3><div class="row2"><span class="tag tag-sky">Workshop</span><span class="tag tag-green">Upcoming</span></div></div>
+      </div>
+      <div class="sched" data-reveal style="--d:.08s">
+        <div class="datebox db-green"><b>19</b><span>Aug 2026</span></div>
+        <div><h3>Global Citizenship Education</h3><div class="row2"><span class="tag tag-sky">Workshop</span><span class="tag tag-green">Upcoming</span></div></div>
+      </div>
+      <div class="sched" data-reveal style="--d:.14s">
+        <div class="datebox db-gold"><b>26</b><span>Aug 2026</span></div>
+        <div><h3>Education for Sustainable Development</h3><div class="row2"><span class="tag tag-sky">Workshop</span><span class="tag tag-green">Upcoming</span></div></div>
+      </div>
+      <div class="sched" data-reveal style="--d:.2s">
+        <div class="datebox db-lav"><b>1</b><span>Sep 2026</span></div>
+        <div><h3>Essay Writing Competition Opens</h3><div class="row2"><span class="tag tag-warm">Competition</span></div></div>
+      </div>
+      <div class="sched" data-reveal style="--d:.26s">
+        <div class="datebox db-lav"><b>1</b><span>Sep 2026</span></div>
+        <div><h3>Research Paper Competition Opens</h3><div class="row2"><span class="tag tag-warm">Competition</span></div></div>
+      </div>
+      <div class="sched" data-reveal style="--d:.32s">
+        <div class="datebox db-blue"><b>Oct</b><span>2026</span></div>
+        <div><h3>Culmination Event &amp; Exhibition</h3><div class="row2"><span class="tag tag-lav">Showcase</span><span class="tag tag-warm">Tentative</span></div></div>
+      </div>
+    </div>
+    <p class="note" data-reveal><svg><use href="#i-info"/></svg>All dates are tentative and may be adjusted by the school. Confirmed dates will be shared through class notices and the school notice board.</p>
+  </div>
+</section>
+
+<!-- ============ STUDENT PUBLICATIONS ============ -->
+<section class="pubs" id="publications">
+  <div class="container">
+    <div class="sec-head" data-reveal>
+      <span class="eyebrow gold"><i class="dot"></i>Student Voices</span>
+      <h2>Student Publications</h2>
+      <p>As the programme culminates, students contribute articles for the showcase, the school magazine and the newspaper.</p>
+    </div>
+    <div class="pub-grid">
+      <article class="mag" data-reveal style="--d:.05s">
+        <div class="mag-head mt-blue"><svg><use href="#i-star"/></svg><h3>Culmination Event</h3></div>
+        <div class="mag-body">
+          <div class="art"><b>“Voices of Tomorrow: Highlights from Our Showcase”</b><span>Example title · written by students</span></div>
+          <div class="art"><b>“A Journey Through Our Kindness Graph”</b><span>Example title · written by students</span></div>
+        </div>
+      </article>
+      <article class="mag" data-reveal style="--d:.15s">
+        <div class="mag-head mt-green"><svg><use href="#i-book"/></svg><h3>School Magazine</h3></div>
+        <div class="mag-body">
+          <div class="art"><b>“What Peace Means to Me”</b><span>Example title · student reflection</span></div>
+          <div class="art"><b>“Maths Across Cultures: What We Discovered”</b><span>Example title · written by students</span></div>
+        </div>
+      </article>
+      <article class="mag" data-reveal style="--d:.25s">
+        <div class="mag-head mt-gold"><svg><use href="#i-news"/></svg><h3>Newspaper</h3></div>
+        <div class="mag-body">
+          <div class="art"><b>“Young Citizens Learn for a Peaceful Tomorrow”</b><span>Example title · written by students</span></div>
+          <div class="art"><b>“SDG 4.7 in Our Classroom”</b><span>Example title · written by students</span></div>
+        </div>
+      </article>
+    </div>
+    <p class="note" data-reveal><svg><use href="#i-info"/></svg>The titles above are illustrative examples. Final articles will be researched and written by students during the programme.</p>
+  </div>
+</section>
+
+<!-- ============ RECOGNITION ============ -->
+<section class="awards" id="recognition">
+  <div class="container">
+    <div class="sec-head center" data-reveal>
+      <span class="eyebrow lav"><i class="dot"></i>Celebrating Effort</span>
+      <h2>Recognition</h2>
+      <p>Every act of participation deserves to be seen. Students are recognised in the following ways.</p>
+    </div>
+    <div class="award-grid">
+      <article class="award aw-blue" data-reveal style="--d:.02s"><div class="seal"><svg><use href="#i-hat"/></svg></div><h3>Participation Certificate</h3><p>Given to every student who takes part in the workshops, projects and activities.</p></article>
+      <article class="award aw-gold" data-reveal style="--d:.08s"><div class="seal"><svg><use href="#i-medal"/></svg></div><h3>Certificate of Excellence</h3><p>Awarded to competition entries that demonstrate outstanding quality.</p></article>
+      <article class="award aw-green" data-reveal style="--d:.14s"><div class="seal"><svg><use href="#i-pen"/></svg></div><h3>Outstanding Essay</h3><p>Recognising the most thoughtful essay in the writing competition.</p></article>
+      <article class="award aw-lav" data-reveal style="--d:.2s"><div class="seal"><svg><use href="#i-doc"/></svg></div><h3>Outstanding Research Paper</h3><p>Recognising exceptional research; selected papers may be considered for publication.</p></article>
+      <article class="award aw-sky" data-reveal style="--d:.26s"><div class="seal"><svg><use href="#i-heart"/></svg></div><h3>Appreciation Award</h3><p>For contributions that strengthen the spirit of the programme.</p></article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SHOWCASE ============ -->
+<div class="wave" aria-hidden="true"><svg viewBox="0 0 1440 90" preserveAspectRatio="none"><path d="M0 55 C240 95 480 10 720 42 C960 74 1200 18 1440 58 L1440 90 L0 90 Z" fill="#142A66"/></svg></div>
+<section class="showcase" id="showcase">
+  <div class="container">
+    <div data-reveal="left">
+      <span class="eyebrow gold"><i class="dot"></i>Programme Culmination · October 2026 · Tentative</span>
+      <h2>Together for Tomorrow <span style="color:var(--gold)">Showcase</span></h2>
+      <p>The programme concludes with a celebration of student learning where projects, research papers and creative work are shared with the school community.</p>
+      <div class="hl-chips">
+        <span><svg><use href="#i-check"/></svg>Project Exhibition</span>
+        <span><svg><use href="#i-check"/></svg>Student Presentations</span>
+        <span><svg><use href="#i-check"/></svg>Awards</span>
+        <span><svg><use href="#i-check"/></svg>Certificates</span>
+        <span><svg><use href="#i-check"/></svg>Student Articles</span>
+        <span><svg><use href="#i-check"/></svg>School Community Participation</span>
+        <span><svg><use href="#i-check"/></svg>Media Coverage</span>
+      </div>
+      <div class="hero-actions">
+        <a class="btn btn-gold" href="#contact">Join the Initiative <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+        <a class="btn btn-ghost" style="background:transparent;color:#fff;border-color:rgba(255,255,255,.4)" href="#roadmap">View the Roadmap <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      </div>
+    </div>
+    <div class="showcase-art" data-reveal="right" style="--d:.15s">
+      <svg viewBox="0 0 440 380" role="img" aria-labelledby="showT">
+        <title id="showT">Illustration of a celebration stage with a trophy, bunting flags and framed student work</title>
+        <path d="M20 30 Q220 84 420 30" fill="none" stroke="rgba(255,255,255,.45)" stroke-width="3"/>
+        <path d="M60 40l14 2-6 16z" fill="#F4C542"/><path d="M100 47l14 2-6 16z" fill="#fff"/><path d="M140 53l14 2-6 16z" fill="#7CC69B"/><path d="M180 56l14 2-6 16z" fill="#9CC7F0"/><path d="M220 57l14 2-6 16z" fill="#F4C542"/><path d="M260 56l14 2-6 16z" fill="#fff"/><path d="M300 53l14 2-6 16z" fill="#7CC69B"/><path d="M340 47l14 2-6 16z" fill="#9CC7F0"/><path d="M380 40l14 2-6 16z" fill="#F4C542"/>
+        <g class="dove" transform="translate(118,86) scale(.62)"><use href="#doveFig"/></g>
+        <g transform="translate(56,178)"><rect width="56" height="68" rx="7" fill="#fff"/><rect x="8" y="9" width="40" height="34" rx="3" fill="#BFE0F7"/><path d="M8 36 l12-10 8 7 9-11 11 10" stroke="#2E8B57" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M13 52 h30 M13 58 h20" stroke="#C7D4EE" stroke-width="3" stroke-linecap="round"/></g>
+        <g transform="translate(328,178)"><rect width="56" height="68" rx="7" fill="#fff"/><rect x="8" y="9" width="40" height="34" rx="3" fill="#FDF1D2"/><path d="M28 36 c-7-6-10.5-9.5-10.5-14.5 0-3.5 2.8-6.4 6.3-6.4 2.1 0 3.7 1.2 4.2 2.9.5-1.7 2.1-2.9 4.2-2.9 3.5 0 6.3 2.9 6.3 6.4 0 5-3.5 8.5-10.5 14.5z" fill="#F4C542"/><path d="M13 52 h30 M13 58 h20" stroke="#C7D4EE" stroke-width="3" stroke-linecap="round"/></g>
+        <rect x="118" y="302" width="204" height="26" rx="9" fill="#1B3680"/>
+        <rect x="148" y="276" width="144" height="26" rx="9" fill="#24429B"/>
+        <rect x="178" y="250" width="84" height="26" rx="9" fill="#2C4DB0"/>
+        <g transform="translate(220,196)">
+          <path d="M-22 0 h44 v10 a22 22 0 0 1 -44 0 z" fill="#F4C542" stroke="#E3AE23" stroke-width="2"/>
+          <path d="M-22 4 h-8 a10 10 0 0 0 10 12 M22 4 h8 a10 10 0 0 1 -10 12" stroke="#F4C542" stroke-width="5" fill="none" stroke-linecap="round"/>
+          <rect x="-5" y="32" width="10" height="10" fill="#E3AE23"/>
+          <rect x="-17" y="42" width="34" height="9" rx="3.5" fill="#F4C542"/>
+          <use href="#i-spark" x="-7" y="4" width="14" height="14" color="#fff"/>
+        </g>
+        <use href="#i-spark" x="88" y="118" width="16" height="16" color="#F4C542"/>
+        <use href="#i-spark" x="344" y="108" width="14" height="14" color="#fff" opacity=".8"/>
+        <use href="#i-spark" x="212" y="118" width="12" height="12" color="#7CC69B"/>
+        <rect x="150" y="120" width="6" height="12" rx="2" fill="#F4C542" transform="rotate(20 153 126)"/>
+        <rect x="290" y="132" width="6" height="12" rx="2" fill="#9CC7F0" transform="rotate(-18 293 138)"/>
+        <rect x="250" y="96" width="6" height="12" rx="2" fill="#7CC69B" transform="rotate(30 253 102)"/>
+      </svg>
+    </div>
+  </div>
+</section>
+<div class="wave" style="background:linear-gradient(135deg,var(--blue-900),var(--blue) 70%,var(--blue-700))" aria-hidden="true"><svg viewBox="0 0 1440 90" preserveAspectRatio="none"><path d="M0 55 C240 95 480 10 720 42 C960 74 1200 18 1440 58 L1440 90 L0 90 Z" fill="#FFFBF2" transform="rotate(180 720 45)"/></svg></div>
+
+<!-- ============ MEDIA COVERAGE ============ -->
+<section class="media" id="media">
+  <div class="container">
+    <div class="sec-head" data-reveal>
+      <span class="eyebrow"><i class="dot"></i>Sharing the Story</span>
+      <h2>Media Coverage</h2>
+      <p>After the final exhibition, coverage of the showcase will be collected here. The cards below are placeholders.</p>
+    </div>
+    <div class="media-grid">
+      <article class="media-card" data-reveal style="--d:.05s">
+        <div class="m-icon" style="background:var(--sky-100);color:var(--blue)"><svg><use href="#i-news"/></svg></div>
+        <h3>School Newsletter</h3>
+        <p>A feature on the exhibition and student achievements will appear in the school newsletter.</p>
+        <span class="tag tag-line">Placeholder · coverage after the exhibition</span>
+      </article>
+      <article class="media-card" data-reveal style="--d:.15s">
+        <div class="m-icon" style="background:var(--green-100);color:var(--green)"><svg><use href="#i-star"/></svg></div>
+        <h3>Local Education Features</h3>
+        <p>Any local education features covering the showcase will be shared through the school office.</p>
+        <span class="tag tag-line">Placeholder · coverage after the exhibition</span>
+      </article>
+      <article class="media-card" data-reveal style="--d:.25s">
+        <div class="m-icon" style="background:var(--gold-100);color:var(--gold-700)"><svg><use href="#i-globe"/></svg></div>
+        <h3>School Website Highlights</h3>
+        <p>Highlights, photographs and student articles will be published on the school website.</p>
+        <span class="tag tag-line">Placeholder · coverage after the exhibition</span>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ GALLERY ============ -->
+<section class="gallery" id="gallery">
+  <div class="container">
+    <div class="sec-head" data-reveal>
+      <span class="eyebrow lav"><i class="dot"></i>Moments in the Making</span>
+      <h2>Gallery</h2>
+      <p>Placeholder illustrations stand in for photographs of workshops, projects, presentations and celebrations — to be replaced as the programme unfolds.</p>
+    </div>
+    <div class="masonry">
+      <figure class="g-item" data-reveal>
+        <div class="g-art"><svg viewBox="0 0 300 340"><defs><linearGradient id="g1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#6FB7E8"/><stop offset="1" stop-color="#A794E0"/></linearGradient></defs><rect width="300" height="340" fill="url(#g1)"/><circle cx="150" cy="160" r="86" fill="#fff" opacity=".22"/><circle cx="46" cy="60" r="26" fill="#fff" opacity=".18"/><circle cx="258" cy="286" r="34" fill="#fff" opacity=".18"/><use href="#i-users" x="108" y="118" width="84" height="84" color="#fff"/></svg></div>
+        <figcaption class="g-cap"><span><b>Students collaborating</b><small>Group project time</small></span><span class="tag tag-line">Placeholder</span></figcaption>
+      </figure>
+      <figure class="g-item" data-reveal style="--d:.06s">
+        <div class="g-art"><svg viewBox="0 0 300 250"><defs><linearGradient id="g2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2E8B57"/><stop offset="1" stop-color="#6FB7E8"/></linearGradient></defs><rect width="300" height="250" fill="url(#g2)"/><circle cx="150" cy="120" r="72" fill="#fff" opacity=".22"/><circle cx="256" cy="46" r="22" fill="#fff" opacity=".18"/><use href="#i-olive" x="112" y="82" width="76" height="76" color="#fff"/></svg></div>
+        <figcaption class="g-cap"><span><b>Peace education activity</b><small>A Culture of Peace in action</small></span><span class="tag tag-line">Placeholder</span></figcaption>
+      </figure>
+      <figure class="g-item" data-reveal style="--d:.12s">
+        <div class="g-art"><svg viewBox="0 0 300 300"><defs><linearGradient id="g3" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F4C542"/><stop offset="1" stop-color="#F0A63C"/></linearGradient></defs><rect width="300" height="300" fill="url(#g3)"/><circle cx="150" cy="142" r="80" fill="#fff" opacity=".25"/><circle cx="50" cy="252" r="26" fill="#fff" opacity=".2"/><use href="#i-book" x="110" y="102" width="80" height="80" color="#14244F"/></svg></div>
+        <figcaption class="g-cap"><span><b>Workshop</b><small>Workshop afternoon</small></span><span class="tag tag-line">Placeholder</span></figcaption>
+      </figure>
+      <figure class="g-item" data-reveal>
+        <div class="g-art"><svg viewBox="0 0 300 380"><defs><linearGradient id="g4" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#21409A"/><stop offset="1" stop-color="#A794E0"/></linearGradient></defs><rect width="300" height="380" fill="url(#g4)"/><circle cx="150" cy="182" r="90" fill="#fff" opacity=".2"/><circle cx="252" cy="70" r="26" fill="#fff" opacity=".18"/><circle cx="52" cy="316" r="30" fill="#fff" opacity=".18"/><use href="#i-dice" x="106" y="138" width="88" height="88" color="#fff"/><text x="60" y="110" font-size="34" fill="#fff" opacity=".6" font-family="Fredoka" font-weight="600">+</text><text x="222" y="300" font-size="30" fill="#fff" opacity=".6" font-family="Fredoka" font-weight="600">÷</text></svg></div>
+        <figcaption class="g-cap"><span><b>Math activity</b><small>Co-operative maths games</small></span><span class="tag tag-line">Placeholder</span></figcaption>
+      </figure>
+      <figure class="g-item" data-reveal style="--d:.06s">
+        <div class="g-art"><svg viewBox="0 0 300 240"><defs><linearGradient id="g5" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#A794E0"/><stop offset="1" stop-color="#6FB7E8"/></linearGradient></defs><rect width="300" height="240" fill="url(#g5)"/><circle cx="150" cy="116" r="70" fill="#fff" opacity=".22"/><use href="#i-chart" x="112" y="78" width="76" height="76" color="#fff"/></svg></div>
+        <figcaption class="g-cap"><span><b>Project work</b><small>Building the Kindness Graph</small></span><span class="tag tag-line">Placeholder</span></figcaption>
+      </figure>
+      <figure class="g-item" data-reveal style="--d:.12s">
+        <div class="g-art"><svg viewBox="0 0 300 320"><defs><linearGradient id="g6" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7CC69B"/><stop offset="1" stop-color="#2E8B57"/></linearGradient></defs><rect width="300" height="320" fill="url(#g6)"/><circle cx="150" cy="152" r="84" fill="#fff" opacity=".22"/><circle cx="52" cy="60" r="24" fill="#fff" opacity=".18"/><use href="#i-mega" x="108" y="110" width="84" height="84" color="#fff"/></svg></div>
+        <figcaption class="g-cap"><span><b>Student presentation</b><small>Sharing our findings</small></span><span class="tag tag-line">Placeholder</span></figcaption>
+      </figure>
+      <figure class="g-item" data-reveal>
+        <div class="g-art"><svg viewBox="0 0 300 270"><defs><linearGradient id="g7" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#6FB7E8"/><stop offset="1" stop-color="#21409A"/></linearGradient></defs><rect width="300" height="270" fill="url(#g7)"/><circle cx="150" cy="128" r="76" fill="#fff" opacity=".22"/><use href="#i-trophy" x="110" y="88" width="80" height="80" color="#F4C542"/><use href="#i-spark" x="62" y="60" width="18" height="18" color="#fff" opacity=".8"/><use href="#i-spark" x="226" y="180" width="16" height="16" color="#fff" opacity=".8"/></svg></div>
+        <figcaption class="g-cap"><span><b>Awards</b><small>Recognition day</small></span><span class="tag tag-line">Placeholder</span></figcaption>
+      </figure>
+      <figure class="g-item" data-reveal style="--d:.06s">
+        <div class="g-art"><svg viewBox="0 0 300 360"><defs><linearGradient id="g8" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F4C542"/><stop offset="1" stop-color="#A794E0"/></linearGradient></defs><rect width="300" height="360" fill="url(#g8)"/><circle cx="150" cy="172" r="88" fill="#fff" opacity=".25"/><circle cx="250" cy="64" r="26" fill="#fff" opacity=".2"/><use href="#i-star" x="108" y="130" width="84" height="84" color="#14244F"/></svg></div>
+        <figcaption class="g-cap"><span><b>School event</b><small>Showcase preparations</small></span><span class="tag tag-line">Placeholder</span></figcaption>
+      </figure>
+      <figure class="g-item" data-reveal style="--d:.12s">
+        <div class="g-art"><svg viewBox="0 0 300 290"><defs><linearGradient id="g9" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#6FB7E8"/><stop offset="1" stop-color="#2E8B57"/></linearGradient></defs><rect width="300" height="290" fill="url(#g9)"/><circle cx="150" cy="138" r="78" fill="#fff" opacity=".22"/><circle cx="54" cy="240" r="24" fill="#fff" opacity=".18"/><use href="#i-heart" x="110" y="98" width="80" height="80" color="#fff"/></svg></div>
+        <figcaption class="g-cap"><span><b>Community engagement</b><small>Families at the exhibition</small></span><span class="tag tag-line">Placeholder</span></figcaption>
+      </figure>
+    </div>
+    <div style="margin-top:2rem" data-reveal>
+      <p class="note"><svg><use href="#i-cam"/></svg>These are placeholder illustrations. Photographs from the programme will appear here, shared with appropriate permissions.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TESTIMONIALS ============ -->
+<section class="testi" id="testimonials">
+  <div class="container">
+    <div class="sec-head center" data-reveal>
+      <span class="eyebrow"><i class="dot"></i>Voices of the Programme</span>
+      <h2>Testimonials</h2>
+      <p>What students, teachers and parents say about learning together for a peaceful tomorrow.</p>
+    </div>
+    <div class="carousel" data-reveal>
+      <div class="car-viewport" id="carViewport">
+        <div class="car-track" id="carTrack">
+          <div class="t-slide"><article class="t-card">
+            <svg class="q" aria-hidden="true"><use href="#i-quote"/></svg>
+            <blockquote>“Plotting our Kindness Graph every Friday made me notice the small good things we do for each other. Our class feels friendlier — and it all started with one chart on the wall.”</blockquote>
+            <div class="t-who">
+              <span class="avatar av-gold" aria-hidden="true">A</span>
+              <div><b>Aanya P.</b><span>Student · Class VIII &nbsp;·&nbsp; <span class="tag tag-warm">Sample voice</span></span></div>
+            </div>
+          </article></div>
+          <div class="t-slide"><article class="t-card">
+            <svg class="q" aria-hidden="true"><use href="#i-quote"/></svg>
+            <blockquote>“The co-operative maths games changed how my students sit, talk and solve problems together. Winning matters a little less now; helping each other win matters a lot more.”</blockquote>
+            <div class="t-who">
+              <span class="avatar av-blue" aria-hidden="true">R</span>
+              <div><b>Ramesh B.</b><span>Teacher · Mathematics &nbsp;·&nbsp; <span class="tag tag-warm">Sample voice</span></span></div>
+            </div>
+          </article></div>
+          <div class="t-slide"><article class="t-card">
+            <svg class="q" aria-hidden="true"><use href="#i-quote"/></svg>
+            <blockquote>“After the teacher–parent workshop, we started a gratitude jar at home. It was lovely to see the school's values continue at our dinner table.”</blockquote>
+            <div class="t-who">
+              <span class="avatar av-green" aria-hidden="true">K</span>
+              <div><b>Kavita S.</b><span>Parent &nbsp;·&nbsp; <span class="tag tag-warm">Sample voice</span></span></div>
+            </div>
+          </article></div>
+        </div>
+      </div>
+      <div class="car-nav">
+        <button class="car-btn" id="carPrev" aria-label="Previous testimonial"><svg><use href="#i-arrow" style="transform:rotate(180deg)"/></svg></button>
+        <div class="car-dots" id="carDots" role="tablist" aria-label="Choose testimonial"></div>
+        <button class="car-btn" id="carNext" aria-label="Next testimonial"><svg><use href="#i-arrow"/></svg></button>
+      </div>
+      <p class="car-note">These are fictional sample testimonials for demonstration. Real voices will be shared with permission.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FAQ ============ -->
+<section class="faq" id="faq">
+  <div class="container">
+    <div class="sec-head center" data-reveal>
+      <span class="eyebrow green"><i class="dot"></i>Good to Know</span>
+      <h2>Frequently Asked Questions</h2>
+      <p>Quick answers for students, parents and teachers.</p>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item" data-reveal>
+        <button class="faq-q" aria-expanded="false">What is Together for Tomorrow?<span class="fx"><svg><use href="#i-plus"/></svg></span></button>
+        <div class="faq-a"><p>Together for Tomorrow is the Peace Education initiative of Navrachana Higher Secondary School, Sama. It brings together workshops, classroom projects and competitions that help students explore peace, global citizenship and sustainable development through hands-on, experiential learning.</p></div>
+      </div>
+      <div class="faq-item" data-reveal style="--d:.06s">
+        <button class="faq-q" aria-expanded="false">Who can participate?<span class="fx"><svg><use href="#i-plus"/></svg></span></button>
+        <div class="faq-a"><p>The programme is open to students of Navrachana Higher Secondary School, Sama. Workshops and projects run through regular class time, while the essay and research paper competitions welcome entries from participating students. The teacher–parent workshop invites families to join the conversation.</p></div>
+      </div>
+      <div class="faq-item" data-reveal style="--d:.12s">
+        <button class="faq-q" aria-expanded="false">Will certificates be awarded?<span class="fx"><svg><use href="#i-plus"/></svg></span></button>
+        <div class="faq-a"><p>Yes. Students receive Participation Certificates, and competition winners are honoured with Certificates of Excellence, Outstanding Essay and Outstanding Research Paper recognitions, along with Appreciation Awards.</p></div>
+      </div>
+      <div class="faq-item" data-reveal style="--d:.18s">
+        <button class="faq-q" aria-expanded="false">How are competition entries evaluated?<span class="fx"><svg><use href="#i-plus"/></svg></span></button>
+        <div class="faq-a"><p>Entries are reviewed by a panel of teachers against shared rubrics, looking at relevance to the theme, originality of thought, clarity of expression and depth of reflection. Results are announced on the dates listed in the Competitions section.</p></div>
+      </div>
+      <div class="faq-item" data-reveal style="--d:.24s">
+        <button class="faq-q" aria-expanded="false">Can parents participate?<span class="fx"><svg><use href="#i-plus"/></svg></span></button>
+        <div class="faq-a"><p>Absolutely. The Teacher–Parent Workshop is designed to build a shared understanding of peace education at home and school, and families are warmly invited to the culmination event and exhibition.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CONTACT ============ -->
+<section class="contact" id="contact">
+  <div class="container">
+    <div class="sec-head" data-reveal>
+      <span class="eyebrow gold"><i class="dot"></i>Get in Touch</span>
+      <h2>Join the Initiative</h2>
+      <p>Questions, ideas or interest in participating? Reach out to the school office — every voice is welcome.</p>
+    </div>
+    <div class="contact-grid">
+      <div class="c-card" data-reveal="left">
+        <h3><svg><use href="#i-hat"/></svg>Programme Details</h3>
+        <div class="c-row">
+          <div class="c-ic" style="background:var(--sky-100);color:var(--blue)"><svg><use href="#i-hat"/></svg></div>
+          <div><small>Organisation</small><b>Navrachana Higher Secondary School, Sama</b></div>
+        </div>
+        <div class="c-row">
+          <div class="c-ic" style="background:var(--green-100);color:var(--green)"><svg><use href="#i-mail"/></svg></div>
+          <div><small>Contact Email</small><b>peace.ed@togetherfortomorrow.in <span class="ph">Placeholder</span></b></div>
+        </div>
+        <div class="c-row">
+          <div class="c-ic" style="background:var(--gold-100);color:var(--gold-700)"><svg><use href="#i-phone"/></svg></div>
+          <div><small>Phone</small><b>+91 00000 00000 <span class="ph">Placeholder</span></b></div>
+        </div>
+        <div class="c-row">
+          <div class="c-ic" style="background:var(--lav-100);color:var(--lav-700)"><svg><use href="#i-pin"/></svg></div>
+          <div><small>Address</small><b>Sama, Vadodara, Gujarat, India <span class="ph">Placeholder</span></b></div>
+        </div>
+      </div>
+      <div class="c-card" data-reveal="right">
+        <h3><svg><use href="#i-heart"/></svg>Register Your Interest</h3>
+        <form data-demo novalidate>
+          <div class="field"><label for="f-name">Student / Parent Name</label><input id="f-name" type="text" placeholder="e.g. Meera Patel" required></div>
+          <div class="field"><label for="f-role">Class or Role</label><input id="f-role" type="text" placeholder="e.g. Class VIII · Student / Parent"></div>
+          <div class="field"><label for="f-contact">Email or Phone</label><input id="f-contact" type="text" placeholder="How can we reach you?"></div>
+          <button class="btn btn-primary" type="submit">Send Interest <svg aria-hidden="true"><use href="#i-arrow"/></svg></button>
+          <p class="form-ok" role="status">🕊 Thank you! Your interest has been noted. (This is a demo form — no details are actually sent.)</p>
+        </form>
+      </div>
+    </div>
+    <div class="map-box" data-reveal>
+      <svg><use href="#i-pin"/></svg>
+      <b>Google Maps</b>
+      <p>Map embed placeholder — Navrachana Higher Secondary School, Sama<br><span class="tag tag-line" style="margin-top:.4rem;display:inline-block">Placeholder</span></p>
+    </div>
+  </div>
+</section>
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="container">
+    <div class="f-grid">
+      <div class="f-brand">
+        <a class="brand" href="#home">
+          <svg class="brand-mark" aria-hidden="true"><use href="#logo-mark"/></svg>
+          <span class="brand-name">Together <em style="color:var(--gold);font-style:normal">for</em> Tomorrow<span class="brand-sub" style="color:#7B90C0">Inspiring Minds · Building Peace</span></span>
+        </a>
+        <p>The Peace Education initiative of Navrachana Higher Secondary School, Sama — nurturing empathy, global citizenship and sustainable development through experiential learning.</p>
+        <div class="f-social">
+          <a href="#contact" aria-label="Social media placeholder — Facebook"><svg><use href="#i-users"/></svg></a>
+          <a href="#contact" aria-label="Social media placeholder — Instagram"><svg><use href="#i-cam"/></svg></a>
+          <a href="#contact" aria-label="Social media placeholder — YouTube"><svg><use href="#i-mega"/></svg></a>
+          <a href="#contact" aria-label="Social media placeholder — Share"><svg><use href="#i-share"/></svg></a>
+        </div>
+      </div>
+      <div>
+        <h4>Explore</h4>
+        <ul class="f-links">
+          <li><a href="#home">Home</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#programme">Programme</a></li>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#competitions">Competitions</a></li>
+          <li><a href="#roadmap">Roadmap</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Programme</h4>
+        <ul class="f-links">
+          <li><a href="#timeline">Timeline</a></li>
+          <li><a href="#publications">Student Publications</a></li>
+          <li><a href="#recognition">Recognition</a></li>
+          <li><a href="#showcase">Showcase</a></li>
+          <li><a href="#gallery">Gallery</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+      </div>
+      <div class="f-news">
+        <h4>Newsletter</h4>
+        <p>Follow the journey — workshop updates, student articles and showcase news.</p>
+        <form data-demo novalidate>
+          <input type="email" placeholder="Your email address" aria-label="Email for newsletter" required>
+          <button type="submit">Subscribe</button>
+        </form>
+        <p class="f-note">Demo form — no emails are sent. Social links are placeholders.</p>
+      </div>
+    </div>
+    <div class="f-bottom">
+      <span>© 2026 <b>Navrachana Higher Secondary School, Sama</b> · Together for Tomorrow</span>
+      <span>Inspiring Minds. Building Peace. 🕊</span>
+    </div>
+  </div>
+</footer>
+
+<button class="to-top" id="toTop" aria-label="Back to top"><svg><use href="#i-up"/></svg></button>
+
+<script>
+(function(){
+  const $=(s,c=document)=>c.querySelector(s), $$=(s,c=document)=>[...c.querySelectorAll(s)];
+  const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* Sticky nav state + progress bar + back-to-top */
+  const nav=$('#nav'), progress=$('#progress'), toTop=$('#toTop');
+  const onScroll=()=>{
+    nav.classList.toggle('scrolled', scrollY>8);
+    const h=document.documentElement.scrollHeight-innerHeight;
+    progress.style.width=(h>0?(scrollY/h)*100:0)+'%';
+    toTop.classList.toggle('show', scrollY>600);
+  };
+  addEventListener('scroll', onScroll, {passive:true}); onScroll();
+  toTop.addEventListener('click',()=>scrollTo({top:0,behavior:reduced?'auto':'smooth'}));
+
+  /* Mobile menu */
+  const burger=$('#burger'), panel=$('#navLinks');
+  burger.addEventListener('click',()=>{
+    const open=panel.classList.toggle('open');
+    burger.setAttribute('aria-expanded', open);
+  });
+  $$('a',panel).forEach(a=>a.addEventListener('click',()=>{panel.classList.remove('open');burger.setAttribute('aria-expanded','false');}));
+
+  /* Scroll reveal */
+  const revealEls=$$('[data-reveal]');
+  if(reduced){revealEls.forEach(el=>el.classList.add('in'));}
+  else{
+    const ro=new IntersectionObserver(es=>es.forEach(e=>{
+      if(e.isIntersecting){e.target.classList.add('in');ro.unobserve(e.target);}
+    }),{threshold:.14,rootMargin:'0px 0px -40px 0px'});
+    revealEls.forEach(el=>ro.observe(el));
+  }
+
+  /* Animated counters */
+  const counters=$$('.count');
+  const runCount=el=>{
+    const target=+el.dataset.target, dur=1400, t0=performance.now();
+    const step=t=>{
+      const p=Math.min((t-t0)/dur,1), ease=1-Math.pow(1-p,3);
+      el.textContent=Math.round(target*ease);
+      if(p<1)requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  };
+  if(reduced){counters.forEach(el=>el.textContent=el.dataset.target);}
+  else{
+    const co=new IntersectionObserver(es=>es.forEach(e=>{
+      if(e.isIntersecting){runCount(e.target);co.unobserve(e.target);}
+    }),{threshold:.6});
+    counters.forEach(el=>co.observe(el));
+  }
+
+  /* Roadmap line draw */
+  const tl=$('#tlLine');
+  if(tl){
+    const to=new IntersectionObserver(es=>es.forEach(e=>{
+      if(e.isIntersecting){tl.classList.add('in');to.unobserve(tl);}
+    }),{threshold:.2});
+    to.observe(tl);
+  }
+
+  /* Scrollspy */
+  const spyLinks=$$('.nav-links a[href^="#"]').filter(a=>!a.classList.contains('nav-cta'));
+  const ids=spyLinks.map(a=>a.getAttribute('href').slice(1));
+  const spy=new IntersectionObserver(es=>{
+    es.forEach(e=>{
+      if(e.isIntersecting){
+        spyLinks.forEach(a=>a.classList.toggle('active', a.getAttribute('href')==='#'+e.target.id));
+      }
+    });
+  },{rootMargin:'-40% 0px -55% 0px'});
+  ids.forEach(id=>{const s=document.getElementById(id); if(s)spy.observe(s);});
+
+  /* Testimonials carousel */
+  const track=$('#carTrack'), slides=$$('.t-slide',track), dotsWrap=$('#carDots');
+  let idx=0, timer=null;
+  slides.forEach((_,i)=>{
+    const d=document.createElement('button');
+    d.setAttribute('aria-label','Testimonial '+(i+1));
+    d.addEventListener('click',()=>{go(i);restart();});
+    dotsWrap.appendChild(d);
+  });
+  const dots=$$('button',dotsWrap);
+  const go=i=>{
+    idx=(i+slides.length)%slides.length;
+    track.style.transform='translateX(-'+(idx*100)+'%)';
+    dots.forEach((d,j)=>d.setAttribute('aria-current', j===idx));
+  };
+  const restart=()=>{ if(reduced)return; clearInterval(timer); timer=setInterval(()=>go(idx+1),6000); };
+  $('#carPrev').addEventListener('click',()=>{go(idx-1);restart();});
+  $('#carNext').addEventListener('click',()=>{go(idx+1);restart();});
+  const vp=$('#carViewport');
+  vp.addEventListener('mouseenter',()=>clearInterval(timer));
+  vp.addEventListener('mouseleave',restart);
+  vp.addEventListener('focusin',()=>clearInterval(timer));
+  vp.addEventListener('focusout',restart);
+  go(0); restart();
+
+  /* FAQ accordion */
+  $$('.faq-item').forEach(item=>{
+    const btn=$('.faq-q',item), ans=$('.faq-a',item);
+    btn.addEventListener('click',()=>{
+      const open=item.classList.contains('open');
+      $$('.faq-item.open').forEach(o=>{
+        o.classList.remove('open');
+        $('.faq-q',o).setAttribute('aria-expanded','false');
+        $('.faq-a',o).style.maxHeight=0;
+      });
+      if(!open){
+        item.classList.add('open');
+        btn.setAttribute('aria-expanded','true');
+        ans.style.maxHeight=ans.scrollHeight+'px';
+      }
+    });
+  });
+
+  /* Demo forms */
+  $$('form[data-demo]').forEach(f=>{
+    f.addEventListener('submit',e=>{
+      e.preventDefault();
+      const ok=$('.form-ok',f);
+      if(ok){ok.classList.add('show');}
+      else{
+        const note=document.createElement('p');
+        note.className='f-note'; note.style.color='#F4C542';
+        note.textContent='Subscribed — thank you! (Demo: no email is sent.)';
+        f.appendChild(note);
+      }
+      f.reset();
+    });
+  });
+})();
+</script>
+</body>
 </html>
