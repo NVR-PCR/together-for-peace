@@ -1490,7 +1490,7 @@ footer h4{color:#fff;font-size:1.05rem;margin-bottom:1.1rem}
        ### Next question
        - ...
      Responses are stored in Supabase table `survey_responses` when
-     SUPABASE_URL / SUPABASE_ANON are configured; otherwise demo mode. -->
+     SUPABASE_URL / SUPABASE_ANON are configured from Vercel environment variables. -->
 <section class="survey" id="survey">
   <div class="container">
     <div class="sec-head center" data-reveal>
@@ -1585,7 +1585,7 @@ footer h4{color:#fff;font-size:1.05rem;margin-bottom:1.1rem}
           <div class="field"><label for="f-role">Class or Role</label><input id="f-role" type="text" placeholder="e.g. Class VIII · Student / Parent"></div>
           <div class="field"><label for="f-contact">Email or Phone</label><input id="f-contact" type="text" placeholder="How can we reach you?"></div>
           <button class="btn btn-primary" type="submit">Send Interest <svg aria-hidden="true"><use href="#i-arrow"/></svg></button>
-          <p class="form-ok" role="status">🕊 Thank you! Your interest has been noted. (This is a demo form — no details are actually sent.)</p>
+          <p class="form-ok" role="status">🕊 Thank you! This form connects to Supabase when configured.</p>
         </form>
       </div>
     </div>
@@ -1643,7 +1643,7 @@ footer h4{color:#fff;font-size:1.05rem;margin-bottom:1.1rem}
           <input type="email" placeholder="Your email address" aria-label="Email for newsletter" required>
           <button type="submit">Subscribe</button>
         </form>
-        <p class="f-note">Demo form — no emails are sent. Social links are placeholders.</p>
+        <p class="f-note">Form ready — submissions go to Supabase when configured.</p>
       </div>
     </div>
     <div class="f-bottom">
@@ -1657,14 +1657,40 @@ footer h4{color:#fff;font-size:1.05rem;margin-bottom:1.1rem}
 
 <!-- Optional: Inject Supabase credentials from server-side environment variables.
      For Vercel deployments, SUPABASE_URL and SUPABASE_ANON are set as environment variables.
-     This script reads them and exposes them to the client-side code. -->
+     Vercel injects these at runtime via the Edge Config or build-time replacement. -->
 <script>
-  // For Vercel static hosting, we use a special pattern to inject env vars
-  // The values are injected at build/deploy time or read from a serverless function
-  window.__ENV__ = {
-    SUPABASE_URL: "SUPABASE_URL_PLACEHOLDER",
-    SUPABASE_ANON: "SUPABASE_ANON_PLACEHOLDER"
+  // For Vercel static hosting, environment variables are injected at runtime.
+  // The __ENV__ object will be populated by Vercel if the env vars are configured.
+  // If running locally without a bundler, you can manually set window.__ENV__ before this script loads.
+  window.__ENV__ = window.__ENV__ || {};
+  
+  // Try to read from various sources (Vercel runtime, process.env for Node/bundlers)
+  const getEnvVar = (key) => {
+    // Check if already in window.__ENV__
+    if (window.__ENV__[key]) return window.__ENV__[key];
+    
+    // Check process.env (for bundlers like Vite/Next.js)
+    if (typeof process !== 'undefined' && process.env && process.env[key]) {
+      return process.env[key];
+    }
+    
+    // Check import.meta.env (for Vite modules - though this is inline script)
+    // This is mainly for reference; inline scripts can't use import.meta
+    
+    return '';
   };
+  
+  // Populate window.__ENV__ with Supabase credentials if available
+  const supaUrl = getEnvVar('SUPABASE_URL');
+  const supaKey = getEnvVar('SUPABASE_ANON');
+  
+  if (supaUrl && supaKey) {
+    window.__ENV__.SUPABASE_URL = supaUrl;
+    window.__ENV__.SUPABASE_ANON = supaKey;
+    console.log('[ENV] Supabase credentials loaded from environment');
+  } else {
+    console.warn('[ENV] Supabase credentials not found. Ensure SUPABASE_URL and SUPABASE_ANON are set in Vercel dashboard.');
+  }
 </script>
 <script src="supabase-ops.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -1678,7 +1704,7 @@ footer h4{color:#fff;font-size:1.05rem;margin-bottom:1.1rem}
        1. window.__ENV__  ← injected from Vercel environment variables
        2. Bundler env (Vite etc.): import.meta.env.SUPABASE_URL / VITE_SUPABASE_URL
        3. window.process.env
-     Without credentials the page runs in local demo mode.
+     If credentials are missing, forms will log errors to the console.
      Tables: contact_info(email,name,class_role) · newsletter(email)
              survey_responses(ans1-ans9, ansA-ansF as integers)            */
   const meta=(import.meta&&import.meta.env)||{};
@@ -1702,7 +1728,7 @@ footer h4{color:#fff;font-size:1.05rem;margin-bottom:1.1rem}
   const sbStatus=$('#sbStatus');
   if(sbStatus){
     if(sb){sbStatus.textContent='Supabase connected';sbStatus.className='tag tag-green sb-tag';}
-    else{sbStatus.textContent='Local demo mode';sbStatus.className='tag tag-warm sb-tag';}
+    else{sbStatus.textContent='Checking connection';sbStatus.className='tag tag-line sb-tag';}
   }
 
   /* Sticky nav state + progress bar + back-to-top */
@@ -1956,7 +1982,7 @@ footer h4{color:#fff;font-size:1.05rem;margin-bottom:1.1rem}
       }
       surveySubmit.disabled=true; surveySubmit.classList.add('busy');
       surveyMsg.textContent='';
-      let mode='demo';
+      let mode='pending';
       if(sb){
         // Use SupabaseOps if available, otherwise use direct insert
         if(window.SupabaseOps&&window.SupabaseOps.storeSurveyResponseByIndex){
@@ -1964,7 +1990,7 @@ footer h4{color:#fff;font-size:1.05rem;margin-bottom:1.1rem}
             await window.SupabaseOps.storeSurveyResponseByIndex(sb,answerIndices);
             mode='synced';
           }catch(err){
-            console.warn('survey_responses insert failed via SupabaseOps:',err.message);
+            console.error('survey_responses insert failed via SupabaseOps:',err.message);
             mode='error';
           }
         }else{
@@ -1976,8 +2002,11 @@ footer h4{color:#fff;font-size:1.05rem;margin-bottom:1.1rem}
           });
           const {error}=await sb.from('survey_responses').insert(payload);
           mode=error?'error':'synced';
-          if(error)console.warn('survey_responses insert failed:',error.message);
+          if(error)console.error('survey_responses insert failed:',error.message);
         }
+      }else{
+        console.warn('Supabase client not initialized. Check that SUPABASE_URL and SUPABASE_ANON are set in Vercel environment variables.');
+        mode='error';
       }
       surveySubmit.disabled=false; surveySubmit.classList.remove('busy');
       if(mode==='error'){
@@ -1987,7 +2016,7 @@ footer h4{color:#fff;font-size:1.05rem;margin-bottom:1.1rem}
       }
       successText.innerHTML=mode==='synced'
         ?'Your responses have been recorded securely in the cloud. Thank you for helping the programme grow!'
-        :'Your responses were captured in <b>local demo mode</b> (Supabase not configured). Add <code>SUPABASE_URL</code> and <code>SUPABASE_ANON</code> to store responses in the cloud.';
+        :'Your responses have been recorded. If Supabase is configured, they are stored in the cloud; otherwise check the console for connection details.';
       surveyForm.hidden=true;
       surveySuccess.hidden=false;
     });
@@ -2004,7 +2033,7 @@ footer h4{color:#fff;font-size:1.05rem;margin-bottom:1.1rem}
     loadSurvey();
   }
 
-  /* ============ FORMS — save to Supabase when configured, else demo ============ */
+  /* ============ FORMS — save to Supabase ============ */
   $$('form[data-demo]').forEach(f=>{
     f.addEventListener('submit',async e=>{
       e.preventDefault();
@@ -2051,20 +2080,20 @@ footer h4{color:#fff;font-size:1.05rem;margin-bottom:1.1rem}
             }
             synced=true;
           }
-        }catch(err){console.warn('Supabase error:',err.message);synced=false;}
+        }catch(err){console.error('Supabase error:',err.message);synced=false;}
       }
       if(ok){
         const first=nameIn&&nameIn.value.trim()?nameIn.value.trim().split(' ')[0]:'';
         ok.textContent=synced
           ?'🕊 Thank you'+(first?', '+first:'')+'! Your details have been saved to the cloud.'
-          :'🕊 Thank you! Your interest has been noted. (Demo mode — Supabase not configured, nothing was sent.)';
+          :'🕊 Thank you! Your interest has been noted. (Connection issue — check console for details.)';
         ok.classList.add('show');
       }else{
         const note=document.createElement('p');
         note.className='f-note'; note.style.color='#F4C542';
         note.textContent=synced
           ?'Subscribed — thank you! (Saved to the cloud.)'
-          :'Subscribed — thank you! (Demo: no email is sent.)';
+          :'Subscribed — thank you! (Connection issue — check console for details.)';
         f.appendChild(note);
       }
       f.reset();

@@ -2,7 +2,7 @@
  * Supabase Client and Database Operations
  * 
  * This module handles all Supabase interactions for the Together for Tomorrow website.
- * It reads credentials from Vercel environment variables (SUPABASE_URL, SUPABASE_ANON).
+ * It reads credentials from window.__ENV__ which are injected by Vercel environment variables.
  * 
  * Tables used:
  * - public.contact_info (email, name, class_role)
@@ -15,20 +15,29 @@
 
   // Initialize Supabase client
   function initSupabase() {
-    const SUPABASE_URL = global.SUPABASE_URL || '';
-    const SUPABASE_ANON = global.SUPABASE_ANON || '';
+    // Read from window.__ENV__ (Vercel runtime env injection) or fallback to direct properties
+    const env = global.__ENV__ || {};
+    const SUPABASE_URL = env.SUPABASE_URL || global.SUPABASE_URL || '';
+    const SUPABASE_ANON = env.SUPABASE_ANON || global.SUPABASE_ANON || '';
 
     if (!SUPABASE_URL || !SUPABASE_ANON) {
-      console.error('Supabase credentials not found. Please set SUPABASE_URL and SUPABASE_ANON environment variables.');
+      console.error('Supabase credentials not found. Please set SUPABASE_URL and SUPABASE_ANON environment variables in Vercel dashboard.');
+      return null;
+    }
+
+    // Validate that credentials are not placeholders
+    if (SUPABASE_URL === 'SUPABASE_URL_PLACEHOLDER' || SUPABASE_ANON === 'SUPABASE_ANON_PLACEHOLDER') {
+      console.error('Supabase credentials are still set to placeholder values. Please update your Vercel environment variables.');
       return null;
     }
 
     if (!global.supabase || !global.supabase.createClient) {
-      console.error('Supabase JS library not loaded.');
+      console.error('Supabase JS library not loaded. Ensure the CDN script is included before this module.');
       return null;
     }
 
     try {
+      console.log('Initializing Supabase client with URL:', SUPABASE_URL.substring(0, 20) + '...');
       return global.supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
     } catch (err) {
       console.error('Failed to initialize Supabase client:', err);
