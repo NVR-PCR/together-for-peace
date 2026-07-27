@@ -71,9 +71,5 @@
         }
       ]
     }
-  ],
-  "env": {
-    "SUPABASE_URL": "@SUPABASE_URL",
-    "SUPABASE_ANON": "@SUPABASE_ANON"
-  }
+  ]
 }
