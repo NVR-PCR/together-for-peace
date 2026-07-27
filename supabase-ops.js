@@ -2,7 +2,7 @@
  * Supabase Client and Database Operations
  * 
  * This module handles all Supabase interactions for the Together for Tomorrow website.
- * It reads credentials from window.__ENV__ which are injected by Vercel environment variables.
+ * It reads credentials from window.__CONFIG__ or window.__ENV__ which are injected at build time.
  * 
  * Tables used:
  * - public.contact_info (email, name, class_role)
@@ -15,19 +15,26 @@
 
   // Initialize Supabase client
   function initSupabase() {
-    // Read from window.__ENV__ (Vercel runtime env injection) or fallback to direct properties
+    // Read from window.__CONFIG__ (build-time injection) or window.__ENV__ (runtime)
+    const config = global.__CONFIG__ || {};
     const env = global.__ENV__ || {};
-    const SUPABASE_URL = env.SUPABASE_URL || global.SUPABASE_URL || '';
-    const SUPABASE_ANON = env.SUPABASE_ANON || global.SUPABASE_ANON || '';
+    
+    const SUPABASE_URL = config.SUPABASE_URL || env.SUPABASE_URL || global.SUPABASE_URL || '';
+    const SUPABASE_ANON = config.SUPABASE_ANON || env.SUPABASE_ANON || global.SUPABASE_ANON || '';
 
     if (!SUPABASE_URL || !SUPABASE_ANON) {
-      console.error('Supabase credentials not found. Please set SUPABASE_URL and SUPABASE_ANON environment variables in Vercel dashboard.');
+      console.error('Supabase credentials not found. Please ensure SUPABASE_URL and SUPABASE_ANON are set in Vercel environment variables.');
       return null;
     }
 
-    // Validate that credentials are not placeholders
-    if (SUPABASE_URL === 'SUPABASE_URL_PLACEHOLDER' || SUPABASE_ANON === 'SUPABASE_ANON_PLACEHOLDER') {
-      console.error('Supabase credentials are still set to placeholder values. Please update your Vercel environment variables.');
+    // Validate that credentials look valid
+    if (!SUPABASE_URL.startsWith('https://')) {
+      console.error('Supabase URL appears invalid. Must start with https://');
+      return null;
+    }
+
+    if (SUPABASE_ANON.length < 20) {
+      console.error('Supabase anon key appears too short. Check your configuration.');
       return null;
     }
 
@@ -37,7 +44,7 @@
     }
 
     try {
-      console.log('Initializing Supabase client with URL:', SUPABASE_URL.substring(0, 20) + '...');
+      console.log('Initializing Supabase client...');
       return global.supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
     } catch (err) {
       console.error('Failed to initialize Supabase client:', err);
@@ -72,6 +79,7 @@
       throw error;
     }
 
+    console.log('Contact info saved successfully');
     return result;
   }
 
@@ -98,6 +106,7 @@
       throw error;
     }
 
+    console.log('Newsletter subscription saved successfully');
     return result;
   }
 
@@ -142,6 +151,7 @@
       throw error;
     }
 
+    console.log('Survey response saved successfully');
     return result;
   }
 
@@ -157,21 +167,19 @@
 
     const payload = {};
 
-    // questionAnswers is expected to be an object like:
-    // { "Question 1": 1, "Question 2": 3, ... } or { 0: 1, 1: 3, ... }
-    // We map these to ans1, ans2, etc. based on order
+    // questionAnswers is expected to be an array like:
+    // [1, 3, 2, ...] where index corresponds to question order
+    // We map these to ans1, ans2, etc.
     
-    const keys = Object.keys(questionAnswers);
-    keys.forEach((key, index) => {
-      const value = questionAnswers[key];
-      if (value !== undefined && value !== null) {
+    questionAnswers.forEach((val, index) => {
+      if (val !== undefined && val !== null) {
         // Determine if this should be numeric (1-9) or lettered (A-F)
         if (index < 9) {
-          payload[`ans${index + 1}`] = parseInt(value, 10);
+          payload[`ans${index + 1}`] = parseInt(val, 10);
         } else if (index < 15) {
           const letterIndex = index - 9;
           const letters = ['A', 'B', 'C', 'D', 'E', 'F'];
-          payload[`ans${letters[letterIndex]}`] = parseInt(value, 10);
+          payload[`ans${letters[letterIndex]}`] = parseInt(val, 10);
         }
       }
     });
@@ -185,6 +193,7 @@
       throw error;
     }
 
+    console.log('Survey response saved successfully');
     return result;
   }
 
