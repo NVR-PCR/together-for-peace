@@ -1655,42 +1655,13 @@ footer h4{color:#fff;font-size:1.05rem;margin-bottom:1.1rem}
 
 <button class="to-top" id="toTop" aria-label="Back to top"><svg><use href="#i-up"/></svg></button>
 
-<!-- Optional: Inject Supabase credentials from server-side environment variables.
-     For Vercel deployments, SUPABASE_URL and SUPABASE_ANON are set as environment variables.
-     Vercel injects these at runtime via the Edge Config or build-time replacement. -->
+<!-- Supabase Configuration for Vercel -->
 <script>
-  // For Vercel static hosting, environment variables are injected at runtime.
-  // The __ENV__ object will be populated by Vercel if the env vars are configured.
-  // If running locally without a bundler, you can manually set window.__ENV__ before this script loads.
+  // Inject Supabase credentials from Vercel environment variables at build time
+  // These placeholders are replaced by the build script (inject-env.js) during deployment
   window.__ENV__ = window.__ENV__ || {};
-  
-  // Try to read from various sources (Vercel runtime, process.env for Node/bundlers)
-  const getEnvVar = (key) => {
-    // Check if already in window.__ENV__
-    if (window.__ENV__[key]) return window.__ENV__[key];
-    
-    // Check process.env (for bundlers like Vite/Next.js)
-    if (typeof process !== 'undefined' && process.env && process.env[key]) {
-      return process.env[key];
-    }
-    
-    // Check import.meta.env (for Vite modules - though this is inline script)
-    // This is mainly for reference; inline scripts can't use import.meta
-    
-    return '';
-  };
-  
-  // Populate window.__ENV__ with Supabase credentials if available
-  const supaUrl = getEnvVar('SUPABASE_URL');
-  const supaKey = getEnvVar('SUPABASE_ANON');
-  
-  if (supaUrl && supaKey) {
-    window.__ENV__.SUPABASE_URL = supaUrl;
-    window.__ENV__.SUPABASE_ANON = supaKey;
-    console.log('[ENV] Supabase credentials loaded from environment');
-  } else {
-    console.warn('[ENV] Supabase credentials not found. Ensure SUPABASE_URL and SUPABASE_ANON are set in Vercel dashboard.');
-  }
+  window.__ENV__.SUPABASE_URL = "SUPABASE_URL_PLACEHOLDER";
+  window.__ENV__.SUPABASE_ANON = "SUPABASE_ANON_PLACEHOLDER";
 </script>
 <script src="supabase-ops.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -1700,17 +1671,11 @@ footer h4{color:#fff;font-size:1.05rem;margin-bottom:1.1rem}
   const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   /* ============ SUPABASE — env vars SUPABASE_URL & SUPABASE_ANON ============
-     Resolution order (first non-empty wins):
-       1. window.__ENV__  ← injected from Vercel environment variables
-       2. Bundler env (Vite etc.): import.meta.env.SUPABASE_URL / VITE_SUPABASE_URL
-       3. window.process.env
-     If credentials are missing, forms will log errors to the console.
+     Reads credentials from window.__ENV__ which is populated by Vercel at build time.
      Tables: contact_info(email,name,class_role) · newsletter(email)
              survey_responses(ans1-ans9, ansA-ansF as integers)            */
-  const meta=(import.meta&&import.meta.env)||{};
   const win=window.__ENV__||{};
-  const proc=(window.process&&window.process.env)||{};
-  const env=k=>win[k]||meta[k]||meta['VITE_'+k]||proc[k]||'';
+  const env=k=>win[k]||'';
   let sb=null;
   
   // Check if we have valid Supabase credentials (not placeholders)

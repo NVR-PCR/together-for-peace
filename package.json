@@ -1,0 +1,11 @@
+{
+  "name": "together-for-tomorrow",
+  "version": "1.0.0",
+  "description": "Peace Education Initiative - Navrachana Higher Secondary School, Sama",
+  "private": true,
+  "scripts": {
+    "build": "node inject-env.js",
+    "vercel-build": "node inject-env.js"
+  },
+  "devDependencies": {}
+}
