@@ -1785,7 +1785,7 @@ footer h4{color:#fff;font-size:1.05rem;margin-bottom:1.1rem}
   });
 
   /* ============ DYNAMIC PHOTOS from public/ (PNG only) ============
-     Any element with data-photo="Code Name" loads public/Code Name.png and
+     Any element with data-photo="Code Name" loads /public/Code Name.png and
      fades it in over its placeholder illustration. Missing files simply
      keep the illustration. */
   $$('[data-photo]').forEach(slot=>{
@@ -1797,7 +1797,7 @@ footer h4{color:#fff;font-size:1.05rem;margin-bottom:1.1rem}
     const capB=$('.g-cap b',slot);
     img.alt=capB?capB.textContent:code;
     img.loading='lazy'; img.decoding='async';
-    img.src='public/'+encodeURIComponent(code)+'.png';
+    img.src='/public/'+encodeURIComponent(code)+'.png';
     img.addEventListener('load',()=>slot.classList.add('has-photo'));
     img.addEventListener('error',()=>img.remove());
     art.appendChild(img);
@@ -1868,7 +1868,7 @@ footer h4{color:#fff;font-size:1.05rem;margin-bottom:1.1rem}
       </div>
       <p class="survey-msg" style="text-align:center">Loading questions from survey.txt…</p>`;
     try{
-      const res=await fetch('survey.txt',{cache:'no-cache'});
+      const res=await fetch('/survey.txt',{cache:'no-cache'});
       if(!res.ok)throw new Error('HTTP '+res.status);
       renderSurvey(parseSurvey(await res.text()));
     }catch(err){
